@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Org {
+  id                    String       @id @default(cuid())
+  name                  String
+  slug                  String       @unique
+  logoUrl               String?
+  plan                  Plan         @default(FREE)
+  stripeCustomerId      String?
+  stripeSubscriptionId  String?
+  feedbackDeliveryScore Float        @default(0)
+  createdAt             DateTime     @default(now())
+  members               OrgMember[]
+  programs              Program[]
+}
+
+model OrgMember {
+  id        String   @id @default(cuid())
+  orgId     String
+  userId    String
+  role      Role     @default(MEMBER)
+  org       Org      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  @@unique([orgId, userId])
+}
+
+model Program {
+  id               String            @id @default(cuid())
+  orgId            String
+  name             String
+  type             ProgramType
+  status           ProgramStatus     @default(DRAFT)
+  tonePreference   Tone              @default(FRIENDLY)
+  decisionDeadline DateTime?
+  createdAt        DateTime          @default(now())
+  org              Org               @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  criteria         RubricCriteria[]
+  applicants       Applicant[]
+}
+
+model RubricCriteria {
+  id          String          @id @default(cuid())
+  programId   String
+  name        String
+  weight      Int
+  description String?
+  program     Program         @relation(fields: [programId], references: [id], onDelete: Cascade)
+  scores      ApplicantScore[]
+}
+
+model Applicant {
+  id             String           @id @default(cuid())
+  programId      String
+  name           String
+  email          String
+  status         ApplicantStatus  @default(PENDING)
+  submissionText String?
+  createdAt      DateTime         @default(now())
+  program        Program          @relation(fields: [programId], references: [id], onDelete: Cascade)
+  scores         ApplicantScore[]
+  report         FeedbackReport?
+  emailDelivery  EmailDelivery?
+  @@unique([programId, email])
+}
+
+model ApplicantScore {
+  id          String         @id @default(cuid())
+  applicantId String
+  criteriaId  String
+  score       Float
+  judgeNotes  String?
+  applicant   Applicant      @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  criteria    RubricCriteria @relation(fields: [criteriaId], references: [id], onDelete: Cascade)
+  @@unique([applicantId, criteriaId])
+}
+
+model FeedbackReport {
+  id                String          @id @default(cuid())
+  applicantId       String          @unique
+  summary           String
+  strengthHighlight String
+  improvementAreas  Json
+  nextSteps         Json
+  criteriaBreakdown Json
+  overallPercentile Float
+  status            ReportStatus    @default(GENERATING)
+  generatedAt       DateTime?
+  sentAt            DateTime?
+  applicant         Applicant       @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+}
+
+model EmailDelivery {
+  id          String          @id @default(cuid())
+  applicantId String          @unique
+  status      DeliveryStatus  @default(PENDING)
+  sentAt      DateTime?
+  openedAt    DateTime?
+  applicant   Applicant       @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+}
+
+enum Plan {
+  FREE
+  STARTER
+  GROWTH
+  SCALE
+  ENTERPRISE
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum ProgramType {
+  HACKATHON
+  ACCELERATOR
+  GRANT
+  JOB
+  FELLOWSHIP
+  AWARD
+  OTHER
+}
+
+enum ProgramStatus {
+  DRAFT
+  ACTIVE
+  CLOSED
+}
+
+enum Tone {
+  FORMAL
+  FRIENDLY
+  CONCISE
+}
+
+enum ApplicantStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum ReportStatus {
+  GENERATING
+  READY
+  SENT
+  ERROR
+}
+
+enum DeliveryStatus {
+  PENDING
+  SENT
+  BOUNCED
+  OPENED
+}
