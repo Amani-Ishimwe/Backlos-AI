@@ -1,226 +1,422 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 
 export default function LandingPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
   const plans = [
     {
-      name: "Starter",
+      name: "Starter Plan",
       price: "$49",
-      desc: "Perfect for single hackathons and standard grant registries.",
+      desc: "Perfect for single hackathons and standard grant registries looking to start anti-ghosting pipelines.",
       features: [
         "Up to 200 applicants / month",
-        "Standard Gemini feedback reviews",
-        "CSV Intake & manual entries",
+        "Standard AI feedback reviews",
+        "CSV Ingest & manual entries",
         "Resend email dispatch system",
         "Public Accountability portal",
+        "No long-term commitments",
       ],
       cta: "Start Free Trial",
-      priceId: "price_starter",
       popular: false,
     },
     {
-      name: "Growth",
+      name: "Growth Plan",
       price: "$199",
-      desc: "Ideal for high-velocity accelerators and job registry portals.",
+      desc: "Ideal for high-velocity accelerators, fellowships, and competitive job registry portals.",
       features: [
         "Up to 2,000 applicants / month",
-        "Gemini-Flash premium feedback",
+        "Premium AI feedback engine",
         "Priority parallel compilation runs",
         "White-labeled applicant portals",
         "Priority email dispatches & audits",
         "Anti-Ghosting daily reminders",
       ],
       cta: "Deploy Growth Plan",
-      priceId: "price_growth",
       popular: true,
     },
     {
-      name: "Scale",
+      name: "Scale Plan",
       price: "$599",
-      desc: "Built for massive enterprise fellowships and universities.",
+      desc: "Built for massive enterprise fellowships, universities, and large-scale government grant portals.",
       features: [
         "Up to 10,000 applicants / month",
-        "Gemini-Pro advanced models",
+        "Advanced deep-personalized models",
         "SLA guaranteed dispatches",
         "Dedicated database clusters",
         "Anti-Ghosting automated escalation",
         "24/7 Priority support hotline",
       ],
-      cta: "Contact Enterprise Sales",
-      priceId: "price_scale",
+      cta: "Contact Enterprise",
       popular: false,
     },
   ];
 
+  const faqs = [
+    {
+      q: "How does the AI ensure highly constructive feedback?",
+      a: "Our Feedback Engine parses score percentiles and raw judge comments against your defined rubric. It highlights precise strengths, target focus areas, and outlines clear actionable steps to ensure candidates learn and improve.",
+    },
+    {
+      q: "Can we integrate Backlos with existing applicant trackers?",
+      a: "Yes! Backlos works with CSV/Excel sheets exported from standard tools like Typeform, Google Forms, Greenhouse, and Notion, and integrates directly via secure developer APIs.",
+    },
+    {
+      q: "Is candidate email delivery secure?",
+      a: "Absolutely. We route transactional template dispatches through premium Resend SMTP servers, ensuring high inbox deliverability rates and full brand consistency.",
+    },
+    {
+      q: "How do sandboxed developer redirects work?",
+      a: "During development or test modes, all outbound applicant emails are securely routed to Resend test inboxes. This protects real candidate inboxes from receiving accidental drafts.",
+    },
+    {
+      q: "What is the anti-ghosting deadline alarm?",
+      a: "It is an automated background cron daemon that checks program deadlines and sends slack/email notifications to coordinators before candidates feel neglected.",
+    },
+  ];
+
+  const testimonials = [
+    {
+      quote: "We managed a global hackathon with over 500 developers. Previously, sending customized feedback took us a month. With Backlos, we generated and bulk dispatched personalized reports within 5 minutes. The developers loved learning exactly why they missed out!",
+      author: "Jean Dev",
+      role: "Fellowship Director",
+    },
+    {
+      quote: "Candidate ghosting was hurting our talent acquisition metrics. Backlos spreadsheet workspace makes it trivial to drop csv files, run on-the-fly syntax checks, and schedule anti-ghosting alarms. 100% recommended for high-velocity teams.",
+      author: "Marie Noel",
+      role: "HR Operations Manager",
+    },
+    {
+      quote: "As a participant, getting comprehensive evaluations on my submission was extremely refreshing. Instead of a standard cold rejection email, I received detailed improvement Areas and actionable next steps. It kept me highly engaged!",
+      author: "David K.",
+      role: "Hackathon Applicant",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-white text-brand-text font-sans selection:bg-brand-light select-none">
+    <div className="min-h-screen bg-[#F7F8F5] text-slate-800 font-sans antialiased">
       
-      {/* 1. Global Branded Header Navbar */}
-      <header className="max-w-6xl mx-auto h-20 px-6 flex items-center justify-between border-b border-brand-light">
-        <div className="flex items-center space-x-2">
-          <span className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white font-bold rounded-full text-base">
-            ↺
-          </span>
-          <span className="text-xl font-bold tracking-tight text-brand-text">
-            Backlos
-          </span>
+      {/* 1. Transparent Header (Navbar) */}
+      <div className="w-full bg-white/70 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50">
+        <header className="max-w-6xl mx-auto h-16 px-6 flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <span className="flex items-center justify-center w-7 h-7 bg-brand-primary text-white font-bold rounded-lg text-sm shadow-sm select-none">
+              ↺
+            </span>
+            <span className="text-lg font-bold tracking-tight text-slate-900">
+              Backlos
+            </span>
+          </div>
+          
+          <nav className="hidden md:flex items-center space-x-8 text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <a href="#product" className="hover:text-brand-primary transition-colors">Product</a>
+            <a href="#reviews" className="hover:text-brand-primary transition-colors">Reviews</a>
+            <a href="#benefits" className="hover:text-brand-primary transition-colors">Benefits</a>
+            <a href="#pricing" className="hover:text-brand-primary transition-colors">Pricing</a>
+          </nav>
+
+          <div className="flex items-center space-x-4">
+            <Link href="/login">
+              <button className="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-wider">
+                Sign In
+              </button>
+            </Link>
+            <Link href="/signup">
+              <Button variant="primary" size="sm" className="bg-brand-primary border-0 text-white font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-btn shadow-sm hover:opacity-95 transition-opacity">
+                Get Started
+              </Button>
+            </Link>
+          </div>
+        </header>
+      </div>
+
+      {/* 2. Hero Section */}
+      <section id="product" className="max-w-5xl mx-auto px-6 pt-24 pb-16 text-center space-y-8">
+        <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-100 px-3.5 py-1 rounded-badge text-brand-primary text-xs font-bold uppercase tracking-wider select-none">
+          <span>✦</span>
+          <span>55,000+ candidate closures processed</span>
         </div>
         
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-semibold text-brand-muted">
-          <a href="#problem" className="hover:text-brand-primary transition-colors">The Ghosting Epidemic</a>
-          <a href="#how-it-works" className="hover:text-brand-primary transition-colors">How it works</a>
-          <a href="#pricing" className="hover:text-brand-primary transition-colors">Pricing</a>
-        </nav>
+        <h1 className="text-4xl sm:text-7xl font-extrabold tracking-tight text-slate-900 leading-tight max-w-4xl mx-auto">
+          Put An End to Candidate Ghosting.
+        </h1>
+        
+        <p className="text-base sm:text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed font-medium">
+          Maximize your cohort's reputation index with Backlos, the AI-powered feedback delivery engine that auto-compiles and bulk dispatches structured feedback to every applicant automatically.
+        </p>
 
-        <div className="flex items-center space-x-4">
-          <Link href="/login">
-            <button className="text-sm font-bold text-brand-muted hover:text-brand-text transition-colors">
-              Sign In
-            </button>
-          </Link>
-          <Link href="/signup">
-            <Button variant="primary" size="sm">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <Link href="/signup" className="w-full sm:w-auto">
+            <Button variant="primary" size="lg" className="w-full sm:w-auto px-8 py-4 bg-brand-primary border-0 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:opacity-95 transition-all">
               Start Free
             </Button>
           </Link>
-        </div>
-      </header>
-
-      {/* 2. Hero Section */}
-      <section className="max-w-4xl mx-auto px-6 py-20 text-center space-y-8">
-        <div className="inline-flex items-center space-x-1.5 bg-brand-light border border-brand-border px-3 py-1 rounded-badge text-brand-primary text-xs font-bold uppercase tracking-wider animate-pulse">
-          <span>✦</span>
-          <span>B2B Feedback Delivery Platform</span>
-        </div>
-        
-        <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-brand-text leading-tight max-w-3xl mx-auto">
-          Every applicant deserves <span className="text-brand-primary relative">closure.</span>
-        </h1>
-        
-        <p className="text-base sm:text-xl text-brand-muted max-w-2xl mx-auto leading-relaxed font-medium">
-          Ensure that every single applicant to your accelerator, hackathon, grant, or job opening receives structured, personalized, AI-generated feedback. No candidate gets ghosted.
-        </p>
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/signup">
-            <Button variant="primary" size="lg" className="w-full sm:w-auto px-8 py-3.5 shadow-md">
-              Start anti-ghosting now
-            </Button>
-          </Link>
-          <a href="#how-it-works" className="w-full sm:w-auto">
-            <Button variant="outline" size="lg" className="w-full px-8 py-3.5">
-              See how it works
+          <a href="#benefits" className="w-full sm:w-auto">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 border-slate-200 transition-all font-bold text-xs uppercase tracking-wider text-slate-700">
+              More Info
             </Button>
           </a>
         </div>
-
-        {/* Small statistics ticker */}
-        <div className="border-t border-brand-light pt-8 max-w-xl mx-auto grid grid-cols-3 gap-6 text-center">
-          <div>
-            <span className="text-lg font-bold text-brand-primary block">500K+</span>
-            <span className="text-[10px] text-brand-muted uppercase font-bold tracking-wider">hackathons run</span>
-          </div>
-          <div>
-            <span className="text-lg font-bold text-brand-primary block">1.5B</span>
-            <span className="text-[10px] text-brand-muted uppercase font-bold tracking-wider">job submissions</span>
-          </div>
-          <div>
-            <span className="text-lg font-bold text-brand-primary block">~0%</span>
-            <span className="text-[10px] text-brand-muted uppercase font-bold tracking-wider">received feedback</span>
-          </div>
-        </div>
+        
+        <p className="text-[10px] text-slate-400 font-bold italic tracking-wide">
+          *No credit card required, start free instantly.*
+        </p>
       </section>
 
-      {/* 3. The Problem Section */}
-      <section id="problem" className="bg-slate-50/50 border-y border-brand-light py-20">
-        <div className="max-w-6xl mx-auto px-6 space-y-12">
+      {/* 3. The Clover Advantages Section */}
+      <section id="benefits" className="bg-white border-y border-slate-100 py-24">
+        <div className="max-w-6xl mx-auto px-6 space-y-16">
           <div className="text-center space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight text-brand-text">The Ghosting Epidemic</h2>
-            <p className="text-sm text-brand-muted max-w-md mx-auto leading-relaxed">
-              Why leading candidate brands are bleeding reputation metrics.
-            </p>
+            <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
+              THE CLOVER ADVANTAGES
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+              Maximize Your Candidate Brand with Smart Automation
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-8 border-brand-border">
-              <div className="w-10 h-10 bg-brand-light text-brand-primary flex items-center justify-center font-bold text-lg rounded-btn mb-4 select-none">
-                ⚙
+            <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
+              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg rounded-xl border border-indigo-100 select-none">
+                🧠
               </div>
-              <h3 className="text-base font-bold text-brand-text mb-2">Accelerator Programs</h3>
-              <p className="text-xs text-brand-muted leading-relaxed">
-                Founders spend weeks writing extensive pitch decks, only to receive a automated "we regret to inform you" rejection. We compile score audits instantly.
+              <h3 className="text-base font-bold text-slate-900">AI-Optimized Feedback – No Effort Required</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Leverage advanced generative models to automatically synthesize scores and evaluator notes, ensuring every rejected applicant receives deep-personalized evaluations.
               </p>
-            </Card>
+            </div>
 
-            <Card className="p-8 border-brand-border">
-              <div className="w-10 h-10 bg-brand-light text-brand-primary flex items-center justify-center font-bold text-lg rounded-btn mb-4 select-none">
-                ↺
+            <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
+              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg rounded-xl border border-indigo-100 select-none">
+                ⚡
               </div>
-              <h3 className="text-base font-bold text-brand-text mb-2">Hackathon Panels</h3>
-              <p className="text-xs text-brand-muted leading-relaxed">
-                Developers code non-stop for 48 hours. When they don't win, they never learn why. Backlos parses judge points into actionable development matrices.
+              <h3 className="text-base font-bold text-slate-900">Real-Time Insights – Smarter Coaching</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Never keep applicants wondering where they stand. Track generation queues with live status indicators and glow progress metrics in real-time.
               </p>
-            </Card>
+            </div>
 
-            <Card className="p-8 border-brand-border">
-              <div className="w-10 h-10 bg-brand-light text-brand-primary flex items-center justify-center font-bold text-lg rounded-btn mb-4 select-none">
-                ✦
+            <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
+              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg rounded-xl border border-indigo-100 select-none">
+                🌱
               </div>
-              <h3 className="text-base font-bold text-brand-text mb-2">University HR Teams</h3>
-              <p className="text-xs text-brand-muted leading-relaxed">
-                Receiving 10,000 resumes makes custom review dispatches impossible. Backlos lets you bulk sync scores and release reports with standard Resend SMTP dispatches.
+              <h3 className="text-base font-bold text-slate-900">Flexible Rubrics – Tailored for You</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Define custom evaluation criteria parameters and weight balances (Design, Dev, Pitch) that perfectly suit your program cohort's unique goals.
               </p>
-            </Card>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4. How it Works Section */}
-      <section id="how-it-works" className="max-w-6xl mx-auto px-6 py-20 space-y-12">
+      {/* 4. Benefits Grid Section */}
+      <section className="py-24 max-w-6xl mx-auto px-6 space-y-16">
         <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight text-brand-text">Three Steps to Anti-Ghosting</h2>
-          <p className="text-sm text-brand-muted max-w-md mx-auto leading-relaxed">
-            Integrate rubrics, sync CSV files, and launch automated Gemini queues.
-          </p>
+          <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
+            BENEFITS
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+            Why We Shine?
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-          <div className="space-y-4">
-            <span className="text-4xl font-extrabold text-brand-primary opacity-30">01</span>
-            <h3 className="text-base font-bold text-brand-text">Configure Evaluation Rubric</h3>
-            <p className="text-xs text-brand-muted leading-relaxed">
-              Use our interactive drag Rubric Builder to define metrics weights (e.g. Design 30%, Tech 70%) totaling exactly 100%.
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold text-slate-900">Instant Compilations</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Generate personalized reviews in seconds. Powered by 8x parallel worker queues to process massive applicant volumes effortlessly.
+              </p>
+            </div>
+            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
+              <span>Parallel Processing</span>
+              <span className="text-brand-primary">Active</span>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold text-slate-900">Real-Time Ingestion</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Ingest evaluation spreadsheets or enter metrics cell-by-cell in our in-browser data grid. Built-in header checkers validate schema instantly.
+              </p>
+            </div>
+            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
+              <span>CSV & Excel Grid</span>
+              <span className="text-brand-primary">Active</span>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold text-slate-900">Flexible Rubrics</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Establish custom criteria scales that grow with your accelerator. Adjust rubric weights seamlessly to align with new intake specs.
+              </p>
+            </div>
+            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
+              <span>Adaptive Rubrics</span>
+              <span className="text-brand-primary">Active</span>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold text-slate-900">Secure Sandboxed Relays</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Protect real applicant inboxes during drafts. In development mode, every outbound template is securely redirected to a Resend test sandbox.
+              </p>
+            </div>
+            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
+              <span>Sandbox Relayers</span>
+              <span className="text-brand-primary">Active</span>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold text-slate-900">Adaptive Reminders</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Automated Inngest background cron routines check program dates, notifying managers to publish score reviews before cohorts feel abandoned.
+              </p>
+            </div>
+            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
+              <span>Anti-Ghosting Shield</span>
+              <span className="text-brand-primary">Active</span>
+            </div>
+          </Card>
+
+          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
+            <div className="space-y-3">
+              <h3 className="text-sm font-bold text-slate-900">Dedicated Support</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                Access personalized setup advice and API documentation anytime from our operations team to help you optimize candidate experiences.
+              </p>
+            </div>
+            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
+              <span>Dedicated Support</span>
+              <span className="text-brand-primary">Active</span>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      {/* 5. Process Section */}
+      <section className="bg-white border-y border-slate-100 py-24">
+        <div className="max-w-6xl mx-auto px-6 space-y-16">
+          <div className="text-center space-y-2">
+            <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
+              PROCESS
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+              Our Simple Four-Step Approach
+            </h2>
           </div>
 
-          <div className="space-y-4">
-            <span className="text-4xl font-extrabold text-brand-primary opacity-30">02</span>
-            <h3 className="text-base font-bold text-brand-text">Drop in Candidate Scores</h3>
-            <p className="text-xs text-brand-muted leading-relaxed">
-              Import evaluation results using a standard CSV table or manually insert score records with judge comments.
-            </p>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative select-none">
+            <div className="space-y-4">
+              <div className="w-12 h-12 bg-indigo-50 text-brand-primary flex items-center justify-center font-extrabold text-lg rounded-xl border border-indigo-100 shadow-sm">
+                01
+              </div>
+              <h3 className="text-base font-bold text-slate-900">Simplified Onboarding</h3>
+              <ul className="text-xs text-slate-500 space-y-2 leading-relaxed font-medium list-disc pl-4">
+                <li>Configure your evaluation rubric in seconds.</li>
+                <li>Define metrics and weights summing to 100%.</li>
+                <li>Download clean ready-to-use CSV templates.</li>
+              </ul>
+            </div>
 
-          <div className="space-y-4">
-            <span className="text-4xl font-extrabold text-brand-primary opacity-30">03</span>
-            <h3 className="text-base font-bold text-brand-text">Approve & Dispatched Reports</h3>
-            <p className="text-xs text-brand-muted leading-relaxed">
-              Gemini writes beautiful custom reports. Review them on our preview dashboard, then bulk send SMTP closure emails.
-            </p>
+            <div className="space-y-4">
+              <div className="w-12 h-12 bg-indigo-50 text-brand-primary flex items-center justify-center font-extrabold text-lg rounded-xl border border-indigo-100 shadow-sm">
+                02
+              </div>
+              <h3 className="text-base font-bold text-slate-900">AI-Powered Ingest</h3>
+              <ul className="text-xs text-slate-500 space-y-2 leading-relaxed font-medium list-disc pl-4">
+                <li>Type candidate metrics directly in the grid.</li>
+                <li>Upload custom CSV/Excel sheets.</li>
+                <li>Dynamic header validations check score ranges.</li>
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <div className="w-12 h-12 bg-indigo-50 text-brand-primary flex items-center justify-center font-extrabold text-lg rounded-xl border border-indigo-100 shadow-sm">
+                03
+              </div>
+              <h3 className="text-base font-bold text-slate-900">Personalized Audit</h3>
+              <ul className="text-xs text-slate-500 space-y-2 leading-relaxed font-medium list-disc pl-4">
+                <li>Launch parallel compilation pools.</li>
+                <li>Verify report previews in your room.</li>
+                <li>Individually regenerate outliers with single clicks.</li>
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <div className="w-12 h-12 bg-indigo-50 text-brand-primary flex items-center justify-center font-extrabold text-lg rounded-xl border border-indigo-100 shadow-sm">
+                04
+              </div>
+              <h3 className="text-base font-bold text-slate-900">Transparent Dispatches</h3>
+              <ul className="text-xs text-slate-500 space-y-2 leading-relaxed font-medium list-disc pl-4">
+                <li>Approve and send bulk feedback emails.</li>
+                <li>Safe sandbox shields prevent leakages.</li>
+                <li>Track open dispatches via Resend logs.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Pricing Cards Grid Section */}
-      <section id="pricing" className="bg-slate-50/50 border-t border-brand-light py-20">
-        <div className="max-w-6xl mx-auto px-6 space-y-12">
+      {/* 6. Product Reviews Masonry Section */}
+      <section id="reviews" className="py-24 max-w-6xl mx-auto px-6 space-y-16">
+        <div className="text-center space-y-2">
+          <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
+            REVIEWS
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+            What Our Valued Program Managers Say
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonials.map((t, idx) => (
+            <Card key={idx} className="p-6 border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:border-slate-300 transition-colors">
+              <p className="text-xs text-slate-600 leading-relaxed italic">
+                "{t.quote}"
+              </p>
+              <div className="flex items-center space-x-3 pt-4 border-t border-slate-50 mt-4">
+                <span className="w-8 h-8 rounded-full bg-indigo-50 text-brand-primary border border-indigo-100 flex items-center justify-center font-extrabold text-xs select-none uppercase">
+                  {t.author.slice(0, 2)}
+                </span>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-bold text-slate-800 capitalize">{t.author}</span>
+                  <span className="text-[10px] text-slate-400 truncate">{t.role}</span>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. SaaS Pricing Grid Section */}
+      <section id="pricing" className="bg-white border-y border-slate-100 py-24">
+        <div className="max-w-6xl mx-auto px-6 space-y-16">
           <div className="text-center space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight text-brand-text">Sane pricing plans</h2>
-            <p className="text-sm text-brand-muted max-w-md mx-auto leading-relaxed">
-              Choose the Anti-Ghosting tier that matches your candidate registry limits.
+            <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
+              PRICING
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+              Choose the Perfect Plan
+            </h2>
+            <p className="text-xs text-slate-500 max-w-md mx-auto font-medium">
+              We offer flexible pricing plans that align with where your business stands today and where it's headed.
             </p>
           </div>
 
@@ -228,30 +424,30 @@ export default function LandingPage() {
             {plans.map((p) => (
               <Card
                 key={p.name}
-                className={`p-8 border-1.5 flex flex-col justify-between relative bg-white
-                  ${p.popular ? "border-brand-primary shadow-lg ring-1 ring-brand-primary" : "border-brand-border shadow-premium"}`}
+                className={`p-8 border-1.5 flex flex-col justify-between relative bg-white transition-all
+                  ${p.popular ? "border-brand-primary shadow-xl ring-2 ring-brand-primary ring-opacity-50" : "border-slate-200 shadow-sm"}`}
               >
                 {p.popular && (
-                  <span className="absolute top-4 right-4 px-3 py-1 bg-brand-light text-brand-primary text-[10px] font-bold uppercase tracking-wider rounded-badge">
+                  <span className="absolute top-4 right-4 px-3 py-1 bg-indigo-50 border border-indigo-100 text-brand-primary text-[10px] font-bold uppercase tracking-wider rounded-badge">
                     Most Popular
                   </span>
                 )}
 
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-bold text-brand-text">{p.name}</h3>
-                    <p className="text-xs text-brand-muted mt-1 leading-normal">{p.desc}</p>
+                    <h3 className="text-lg font-bold text-slate-900">{p.name}</h3>
+                    <p className="text-xs text-slate-400 mt-1.5 leading-normal font-medium">{p.desc}</p>
                   </div>
 
                   <div className="flex items-baseline space-x-1">
-                    <span className="text-4xl font-bold tracking-tight text-brand-text">{p.price}</span>
-                    <span className="text-xs font-semibold text-brand-muted">/ month</span>
+                    <span className="text-4xl font-extrabold tracking-tight text-slate-900">{p.price}</span>
+                    <span className="text-xs font-semibold text-slate-400">/ month</span>
                   </div>
 
-                  <ul className="space-y-3 pt-6 border-t border-slate-100 text-xs text-brand-text font-semibold">
+                  <ul className="space-y-3.5 pt-6 border-t border-slate-100 text-xs text-slate-700 font-semibold">
                     {p.features.map((f, i) => (
                       <li key={i} className="flex items-start">
-                        <span className="text-emerald-500 font-bold mr-2 select-none">✓</span>
+                        <span className="text-emerald-500 font-bold mr-2.5 select-none">✓</span>
                         <span>{f}</span>
                       </li>
                     ))}
@@ -259,8 +455,8 @@ export default function LandingPage() {
                 </div>
 
                 <div className="pt-8">
-                  <Link href="/signup">
-                    <Button variant={p.popular ? "primary" : "outline"} className="w-full font-bold">
+                  <Link href="/signup" className="w-full">
+                    <Button variant={p.popular ? "primary" : "outline"} className={`w-full font-bold shadow-sm ${p.popular ? "bg-brand-primary border-0 text-white hover:opacity-95" : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"}`}>
                       {p.cta}
                     </Button>
                   </Link>
@@ -268,27 +464,160 @@ export default function LandingPage() {
               </Card>
             ))}
           </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] font-bold text-slate-400 tracking-wider uppercase pt-6">
+            <span>🛡️ 100% Safe Purchase</span>
+            <span>⏱️ 7-Day Money Back Guarantee</span>
+            <span>🚀 Delivery In &lt;24h</span>
+          </div>
         </div>
       </section>
 
-      {/* 6. Footer Section */}
-      <footer className="max-w-6xl mx-auto px-6 py-12 border-t border-brand-light flex flex-col md:flex-row md:items-center md:justify-between text-xs text-brand-muted space-y-4 md:space-y-0">
-        <div className="flex items-center space-x-2">
-          <span className="flex items-center justify-center w-6 h-6 bg-brand-primary text-white font-bold rounded-full text-xs select-none">
+      {/* 8. Competitor Comparison Section */}
+      <section className="py-24 max-w-4xl mx-auto px-6 space-y-16">
+        <div className="text-center space-y-2">
+          <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
+            COMPARISON
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+            Our Value vs. Competitor Value
+          </h2>
+          <p className="text-xs text-slate-500 max-w-md mx-auto font-medium">
+            Compare our SaaS to standard applicant tracking tools and discover how we protect brand credibility, eliminate ghosting, and offer greater feedback flexibility.
+          </p>
+        </div>
+
+        {/* Comparison Table */}
+        <div className="bg-white border border-slate-200 rounded-btn overflow-hidden shadow-sm">
+          <table className="min-w-full divide-y divide-slate-100 text-left text-xs bg-white">
+            <thead className="bg-slate-50 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+              <tr>
+                <th className="px-6 py-4">Features</th>
+                <th className="px-6 py-4 text-brand-primary font-extrabold">Backlos AI Engine</th>
+                <th className="px-6 py-4">Standard ATS</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 text-slate-700 font-semibold">
+              <tr>
+                <td className="px-6 py-4">AI-Powered Personalized Feedback</td>
+                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
+                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+              </tr>
+              <tr>
+                <td className="px-6 py-4">Real-Time Ingestion Grids</td>
+                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
+                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+              </tr>
+              <tr>
+                <td className="px-6 py-4">Customer Support</td>
+                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
+                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+              </tr>
+              <tr>
+                <td className="px-6 py-4">No Hidden Fees</td>
+                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
+                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+              </tr>
+              <tr>
+                <td className="px-6 py-4">Anti-Ghosting Safeguards</td>
+                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
+                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+              </tr>
+              <tr>
+                <td className="px-6 py-4">Integrations via CSV/Excel</td>
+                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
+                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* 9. FAQs Section */}
+      <section className="bg-white border-t border-slate-100 py-24">
+        <div className="max-w-3xl mx-auto px-6 space-y-16">
+          <div className="text-center space-y-2">
+            <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
+              FAQ'S
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+              Got a quick question?
+            </h2>
+            <p className="text-xs text-slate-500 font-medium">
+              We're here to help you make the right decision. Explore our frequently asked questions and find answers below.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, idx) => (
+              <div key={idx} className="bg-slate-50 border border-slate-200 rounded-btn p-5 transition-all select-none">
+                <button
+                  onClick={() => toggleFaq(idx)}
+                  className="w-full flex items-center justify-between font-bold text-slate-800 text-xs uppercase tracking-wider text-left outline-none"
+                >
+                  <span>{faq.q}</span>
+                  <span className="text-base text-slate-400 pl-4">{openFaq === idx ? "−" : "+"}</span>
+                </button>
+                {openFaq === idx && (
+                  <p className="text-xs text-slate-500 leading-relaxed font-medium pt-3 mt-3 border-t border-slate-200/60 animate-in fade-in duration-200">
+                    {faq.a}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 10. Call to Action Banner Section */}
+      <section className="max-w-6xl mx-auto px-6 py-12">
+        <div className="relative rounded-2xl overflow-hidden p-12 bg-white border border-slate-200 text-center space-y-6 shadow-xl select-none">
+          <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
+            KEY TAKEAWAYS
+          </span>
+          
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">
+            Start Delivering Candidate Closure and Protecting Your Brand Today.
+          </h2>
+          <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed font-medium">
+            Experience the power of automated, constructive review loops. Get started now to boost program trust indexes and candidate retention scales.
+          </p>
+          <div className="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
+            <Link href="/signup">
+              <Button size="lg" className="bg-brand-primary hover:opacity-95 text-white border-0 font-bold text-xs uppercase tracking-wider px-8 py-4 shadow-md">
+                Get Started
+              </Button>
+            </Link>
+            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider p-2">
+              Not sure if we're a fit?
+            </div>
+            <Link href="/signup">
+              <Button size="lg" variant="outline" className="bg-slate-50 border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs uppercase tracking-wider px-8 py-4 shadow-sm">
+                Schedule A Call
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 11. Footer Section */}
+      <footer className="max-w-6xl mx-auto px-6 py-12 border-t border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between text-xs text-slate-400 space-y-4 md:space-y-0 select-none font-semibold">
+        <div className="flex items-center space-x-2.5">
+          <span className="flex items-center justify-center w-6 h-6 bg-brand-primary text-white font-bold rounded-lg text-xs select-none shadow-sm">
             ↺
           </span>
-          <span className="font-bold text-brand-text">Backlos</span>
-          <span>&middot; every applicant deserves closure.</span>
+          <span className="font-bold text-slate-900">Backlos Clover</span>
+          <span>&middot; Maximize Your Candidate Brand Potential</span>
         </div>
 
-        <div className="flex items-center space-x-6 font-semibold">
+        <div className="flex items-center space-x-6">
           <Link href="/privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</Link>
           <Link href="/terms" className="hover:text-brand-primary transition-colors">Terms of Service</Link>
-          <a href="mailto:support@backlos.app" className="hover:text-brand-primary transition-colors">Contact support</a>
+          <a href="mailto:support@backlos.app" className="hover:text-brand-primary transition-colors">Contact Support</a>
         </div>
 
-        <div>
-          <span>Rwanda &bull; 2026</span>
+        <div className="text-[10px]">
+          <span>© 2024 Clover Template &bull; Made by Framebase &bull; Rwanda &bull; 2026</span>
         </div>
       </footer>
 
