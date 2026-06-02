@@ -238,17 +238,17 @@ export default function LandingPage() {
 
       {/* Bento Grid Features Section */}
       <section id="benefits" className="py-24 px-6 max-w-6xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="text-center mb-16 space-y-4">
+          <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
             Maximize your candidate brand.
-          </h2>
-          <p className="text-lg text-slate-500 font-medium">Automate feedback and put an end to the silent treatment.</p>
-        </div>
+          </motion.h2>
+          <motion.p variants={fadeInUp} className="text-lg text-slate-500 font-medium">Automate feedback and put an end to the silent treatment.</motion.p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
           
           {/* Large Card 1 */}
-          <div className="md:col-span-2 bg-[#F6F6F9] rounded-[2rem] p-8 md:p-12 border border-slate-100 flex flex-col justify-between relative overflow-hidden group">
+          <motion.div variants={fadeInUp} className="md:col-span-2 bg-[#F6F6F9] rounded-[2rem] p-8 md:p-12 border border-slate-100 flex flex-col justify-between relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-primary/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 group-hover:bg-brand-primary/10 transition-colors duration-700" />
             <div className="relative z-10 space-y-4 max-w-md">
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-brand-primary mb-6">
@@ -269,10 +269,10 @@ export default function LandingPage() {
               <div className="h-8 w-1/2 bg-slate-100 rounded-md"></div>
               <div className="h-8 w-full bg-brand-light rounded-md"></div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Small Card 1 */}
-          <div className="md:col-span-1 bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between relative">
+          <motion.div variants={fadeInUp} className="md:col-span-1 bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between relative">
             <div className="space-y-4">
               <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700 mb-6 border border-slate-100">
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -284,10 +284,10 @@ export default function LandingPage() {
                 Protect real applicant inboxes during drafts. In development mode, every outbound template is securely redirected to a Resend test sandbox.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Small Card 2 */}
-          <div className="md:col-span-1 bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between relative">
+          <motion.div variants={fadeInUp} className="md:col-span-1 bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between relative">
             <div className="space-y-4">
               <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700 mb-6 border border-slate-100">
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -300,10 +300,10 @@ export default function LandingPage() {
                 Automated background routines check program dates, notifying managers to publish score reviews before cohorts feel abandoned.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Large Card 2 */}
-          <div className="md:col-span-2 bg-[#F6F6F9] rounded-[2rem] p-8 md:p-12 border border-slate-100 flex flex-col justify-between relative overflow-hidden group">
+          <motion.div variants={fadeInUp} className="md:col-span-2 bg-[#F6F6F9] rounded-[2rem] p-8 md:p-12 border border-slate-100 flex flex-col justify-between relative overflow-hidden group">
             <div className="relative z-10 space-y-4 max-w-md">
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-brand-primary mb-6">
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -322,21 +322,21 @@ export default function LandingPage() {
               <div className="w-1/4 bg-brand-primary h-48 rounded-t-xl shadow-lg"></div>
               <div className="w-1/4 bg-brand-light h-16 rounded-t-xl"></div>
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
       </section>
 
       {/* Features Grid Section */}
       <section id="features" className="py-24 px-6 max-w-6xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="text-center mb-16 space-y-4">
+          <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
             Everything you need.
-          </h2>
-          <p className="text-lg text-slate-500 font-medium">Powerful features to streamline your process from end to end.</p>
-        </div>
+          </motion.h2>
+          <motion.p variants={fadeInUp} className="text-lg text-slate-500 font-medium">Powerful features to streamline your process from end to end.</motion.p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             {
               title: "Real-Time Ingestion",
@@ -369,7 +369,7 @@ export default function LandingPage() {
               icon: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
             },
           ].map((feature, i) => (
-            <div key={i} className="p-8 rounded-[2rem] bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200/60 flex flex-col items-start text-left">
+            <motion.div variants={fadeInUp} key={i} className="p-8 rounded-[2rem] bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200/60 flex flex-col items-start text-left">
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-primary mb-6 shadow-sm border border-slate-200/50">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   {feature.icon}
@@ -377,20 +377,20 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
               <p className="text-slate-500 font-medium text-sm leading-relaxed">{feature.desc}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* Testimonials Masonry / Marquee Area */}
       <section className="py-24 bg-slate-50 border-y border-slate-200/60 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6 mb-12 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Loved by program managers</h2>
-        </div>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="max-w-6xl mx-auto px-6 mb-12 text-center">
+          <motion.h2 variants={fadeInUp} className="text-3xl font-bold tracking-tight text-slate-900">Loved by program managers</motion.h2>
+        </motion.div>
         
-        <div className="flex gap-6 px-6 overflow-x-auto pb-8 snap-x hide-scrollbar max-w-7xl mx-auto">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="flex gap-6 px-6 overflow-x-auto pb-8 snap-x hide-scrollbar max-w-7xl mx-auto">
           {testimonials.map((t, idx) => (
-            <div key={idx} className="min-w-[320px] md:min-w-[400px] snap-center bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col justify-between">
+            <motion.div variants={fadeInUp} key={idx} className="min-w-[320px] md:min-w-[400px] snap-center bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col justify-between">
               <div className="flex mb-6 text-brand-primary">
                 {[...Array(5)].map((_, i) => (
                   <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -410,23 +410,24 @@ export default function LandingPage() {
                   <div className="text-sm text-slate-500 font-medium">{t.role}</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* Pricing Section */}
       <section id="pricing" className="py-32 px-6 max-w-6xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="text-center mb-16 space-y-4">
+          <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
             Simple, transparent pricing.
-          </h2>
-          <p className="text-lg text-slate-500 font-medium">Choose the perfect plan for your program.</p>
-        </div>
+          </motion.h2>
+          <motion.p variants={fadeInUp} className="text-lg text-slate-500 font-medium">Choose the perfect plan for your program.</motion.p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {plans.map((p, idx) => (
-            <div
+            <motion.div
+              variants={fadeInUp}
               key={p.name}
               className={`relative rounded-[2rem] p-8 md:p-10 flex flex-col bg-white transition-all duration-300
                 ${p.popular 
@@ -472,24 +473,25 @@ export default function LandingPage() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* FAQ Section */}
       <section className="py-24 px-6 max-w-3xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="text-center mb-16 space-y-4">
+          <motion.h2 variants={fadeInUp} className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
             Frequently asked questions
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
 
-        <div className="space-y-4">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="space-y-4">
           {faqs.map((faq, idx) => {
             const isOpen = openFaq === idx;
             return (
-              <div
+              <motion.div
+                variants={fadeInUp}
                 key={idx}
                 onClick={() => toggleFaq(idx)}
                 className={`bg-white border rounded-2xl p-6 cursor-pointer transition-all duration-200
@@ -518,26 +520,26 @@ export default function LandingPage() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </section>
 
       {/* CTA Footer Banner */}
       <section className="py-24 px-6">
-        <div className="max-w-5xl mx-auto bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer} className="max-w-5xl mx-auto bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/20 blur-[100px] rounded-full pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/20 blur-[100px] rounded-full pointer-events-none" />
           
           <div className="relative z-10 space-y-8 max-w-2xl mx-auto flex flex-col items-center">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+            <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
               Ready to automate your candidate feedback?
-            </h2>
-            <p className="text-lg text-slate-300 font-medium">
+            </motion.h2>
+            <motion.p variants={fadeInUp} className="text-lg text-slate-300 font-medium">
               Join hundreds of programs providing closure and protecting their brand reputation.
-            </p>
-            <div className="pt-4 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            </motion.p>
+            <motion.div variants={fadeInUp} className="pt-4 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <Link href="/signup" className="w-full sm:w-auto">
                 <button className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold text-base px-8 py-4 rounded-full transition-all">
                   Get Started Now
@@ -548,9 +550,9 @@ export default function LandingPage() {
                   Contact Sales
                 </button>
               </Link>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Simple Footer */}
