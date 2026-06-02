@@ -8,7 +8,7 @@ import { MotionContainer, MotionItem } from "@/components/layout/MotionWrapper";
 import { Plus, ChevronRight, CheckCircle2, Clock } from "lucide-react";
 
 export default async function ProgramsListPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

@@ -6,7 +6,7 @@ import { UserCircle, Building2, Key, AlertTriangle, Save, ExternalLink } from "l
 import Link from "next/link";
 
 export default async function SettingsPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

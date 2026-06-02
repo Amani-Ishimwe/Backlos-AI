@@ -10,7 +10,7 @@ import { MotionContainer, MotionItem } from "@/components/layout/MotionWrapper";
 import { CreditCard, Zap, CheckCircle2, AlertTriangle, ArrowRight } from "lucide-react";
 
 export default async function BillingConsolePage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

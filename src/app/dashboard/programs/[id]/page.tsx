@@ -14,7 +14,7 @@ interface ProgramOverviewProps {
 }
 
 export default async function ProgramOverviewPage({ params }: ProgramOverviewProps) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

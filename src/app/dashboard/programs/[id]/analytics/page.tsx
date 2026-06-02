@@ -14,7 +14,7 @@ interface AnalyticsProps {
 }
 
 export default async function ProgramAnalyticsPage({ params }: AnalyticsProps) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
