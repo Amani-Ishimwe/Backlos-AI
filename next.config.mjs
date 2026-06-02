@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = {git commit
   typescript: {
     ignoreBuildErrors: true,
   },
