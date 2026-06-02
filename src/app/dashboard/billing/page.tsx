@@ -2,12 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import prisma from "@/lib/prisma";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
-import ProgressBar from "@/components/ui/ProgressBar";
 import Button from "@/components/ui/Button";
 import { getPlanDetails, STRIPE_PLANS } from "@/lib/stripe";
 import BillingPortalActions from "./BillingPortalActions";
+import { MotionContainer, MotionItem } from "@/components/layout/MotionWrapper";
+import { CreditCard, Zap, CheckCircle2, AlertTriangle, ArrowRight } from "lucide-react";
 
 export default async function BillingConsolePage() {
   const supabase = createClient();
@@ -49,9 +49,9 @@ export default async function BillingConsolePage() {
   
   // Decide usage meter color based on thresholds (amber at 80%, red at 95%)
   const getUsageColor = (percent: number) => {
-    if (percent >= 95) return "red" as const;
-    if (percent >= 80) return "amber" as const;
-    return "purple" as const;
+    if (percent >= 95) return "bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.5)]";
+    if (percent >= 80) return "bg-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.5)]";
+    return "bg-brand-primary shadow-[0_0_15px_rgba(108,99,255,0.5)]";
   };
 
   const pricingPlans = [
@@ -104,98 +104,119 @@ export default async function BillingConsolePage() {
   ];
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
+    <MotionContainer className="space-y-8 pb-10">
       {/* Title Header */}
-      <div className="pb-4 border-b border-brand-light">
-        <h1 className="text-2xl font-bold text-brand-text">Billing Console</h1>
-        <p className="text-sm text-brand-muted mt-1">
-          Manage your subscription plans, check monthly candidate intake usage quotas, and synchronize checkouts.
-        </p>
-      </div>
+      <MotionItem className="pb-4 border-b border-slate-200/60 flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Billing Console</h1>
+          <p className="text-sm text-slate-500 font-medium mt-1">
+            Manage your subscription plans, check monthly candidate intake usage quotas, and synchronize checkouts.
+          </p>
+        </div>
+        {org.stripeSubscriptionId && (
+          <BillingPortalActions label="Manage Billing Profile" />
+        )}
+      </MotionItem>
 
-      {/* Usage Meter Card */}
-      <Card className="border-brand-border shadow-premium">
-        <CardHeader className="flex flex-row items-center justify-between border-b border-brand-light pb-4">
-          <div className="space-y-1">
-            <CardTitle className="text-sm font-bold uppercase tracking-wider">Active Usage Quota</CardTitle>
-            <CardDescription>Reset date: 1st day of next calendar month</CardDescription>
-          </div>
-          <Badge variant="primary" className="text-xs uppercase font-bold tracking-wider">
-            {org.plan} Tier
-          </Badge>
-        </CardHeader>
+      {/* Usage Meter Card - Premium Redesign */}
+      <MotionItem className="bg-slate-900 rounded-[2rem] p-8 md:p-10 border border-slate-800 shadow-2xl relative overflow-hidden text-white">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
         
-        <CardContent className="py-6 space-y-4">
-          <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-brand-text">
-            <span>Served Candidates (This Month)</span>
-            <span>
-              {activeUsage} / {limit === Infinity ? "Unlimited" : limit}
-            </span>
+        <div className="relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 space-y-4 md:space-y-0">
+            <div>
+              <div className="flex items-center space-x-2 mb-2">
+                <Zap className="w-4 h-4 text-emerald-400" />
+                <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">Active Usage Quota</h2>
+              </div>
+              <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Reset date: 1st day of next calendar month</p>
+            </div>
+            
+            <div className="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-xl backdrop-blur-sm">
+              <span className="text-xs text-slate-400 font-semibold">Current Tier:</span>
+              <span className="text-sm font-bold text-brand-primary uppercase tracking-wider bg-brand-primary/10 px-2 py-0.5 rounded-md">
+                {org.plan}
+              </span>
+            </div>
           </div>
+          
+          <div className="bg-slate-950/50 rounded-2xl p-6 border border-slate-800/80">
+            <div className="flex items-center justify-between text-sm font-bold uppercase tracking-wider text-slate-300 mb-4">
+              <span>Served Candidates (This Month)</span>
+              <span className="text-white">
+                <span className="text-2xl">{activeUsage}</span> <span className="text-slate-500">/ {limit === Infinity ? "Unlimited" : limit}</span>
+              </span>
+            </div>
 
-          <div className="w-full h-3 bg-brand-light border border-brand-border rounded-badge overflow-hidden">
-            <div
-              className={`h-full rounded-badge transition-all duration-500 ease-out ${
-                getUsageColor(usagePercent) === "red"
-                  ? "bg-rose-500"
-                  : getUsageColor(usagePercent) === "amber"
-                  ? "bg-amber-500"
-                  : "bg-brand-primary"
-              }`}
-              style={{ width: `${Math.min(usagePercent, 100)}%` }}
-            />
-          </div>
+            <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden shadow-inner mb-4">
+              <div
+                className={`h-full rounded-full transition-all duration-1000 ease-out ${getUsageColor(usagePercent)}`}
+                style={{ width: `${Math.min(usagePercent, 100)}%` }}
+              />
+            </div>
 
-          <div className="flex items-center justify-between text-[11px] text-brand-muted font-semibold leading-normal pt-2">
-            <span>
-              {usagePercent >= 95 
-                ? "🚨 CRITICAL: Quota almost full. AI queue feedback generation will be locked soon!" 
-                : usagePercent >= 80 
-                ? "⚠️ Warning: You have consumed 80% of your plan limit." 
-                : "Quotas sync automatically in real-time."}
-            </span>
-            {org.stripeSubscriptionId && (
-              <BillingPortalActions label="Manage Billing Profile" />
-            )}
+            <div className="flex items-center text-xs font-medium">
+              {usagePercent >= 95 ? (
+                <span className="flex items-center text-rose-400 font-bold">
+                  <AlertTriangle className="w-4 h-4 mr-1.5" />
+                  CRITICAL: Quota almost full. AI queue feedback generation will be locked soon!
+                </span>
+              ) : usagePercent >= 80 ? (
+                <span className="flex items-center text-amber-400 font-bold">
+                  <AlertTriangle className="w-4 h-4 mr-1.5" />
+                  Warning: You have consumed 80% of your plan limit.
+                </span>
+              ) : (
+                <span className="flex items-center text-slate-400">
+                  <CheckCircle2 className="w-4 h-4 mr-1.5 text-emerald-500" />
+                  Quotas sync automatically in real-time.
+                </span>
+              )}
+            </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </MotionItem>
 
       {/* Subscription Pricing Grid */}
-      <div className="space-y-6">
-        <h2 className="text-lg font-bold text-brand-text">Sane B2B Pricing Tiers</h2>
+      <MotionItem className="space-y-6 pt-4">
+        <h2 className="text-xl font-bold text-slate-900 tracking-tight">Sane B2B Pricing Tiers</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {pricingPlans.map((p) => (
-            <Card
+            <div
               key={p.name}
-              className={`p-8 border-1.5 flex flex-col justify-between relative bg-white
-                ${p.popular ? "border-brand-primary shadow-lg ring-1 ring-brand-primary" : "border-brand-border shadow-premium"}`}
+              className={`p-8 rounded-[2rem] flex flex-col justify-between relative bg-white transition-all duration-300
+                ${p.popular 
+                  ? "border-2 border-brand-primary shadow-[0_20px_40px_rgba(108,99,255,0.15)] md:-translate-y-2 z-10 scale-[1.02]" 
+                  : "border border-slate-200 shadow-sm hover:shadow-md"
+                }`}
             >
               {p.popular && (
-                <span className="absolute top-4 right-4 px-3 py-1 bg-brand-light text-brand-primary text-[10px] font-bold uppercase tracking-wider rounded-badge select-none">
+                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-brand-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-sm select-none">
                   Most Popular
                 </span>
               )}
 
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-bold text-brand-text">{p.name}</h3>
-                  <Badge variant="primary" className="text-[10px] mt-1.5 uppercase font-bold tracking-wider">
+                  <h3 className="text-xl font-bold text-slate-900">{p.name}</h3>
+                  <Badge variant="primary" className="text-[10px] mt-2 uppercase font-bold tracking-wider bg-brand-light text-brand-primary">
                     {p.limit}
                   </Badge>
                 </div>
 
                 <div className="flex items-baseline space-x-1">
-                  <span className="text-4xl font-bold tracking-tight text-brand-text">{p.price}</span>
-                  <span className="text-xs font-semibold text-brand-muted">/ month</span>
+                  <span className="text-5xl font-extrabold tracking-tight text-slate-900">{p.price}</span>
+                  <span className="text-sm font-semibold text-slate-500">/ month</span>
                 </div>
 
-                <ul className="space-y-3 pt-6 border-t border-slate-100 text-xs text-brand-text font-semibold">
+                <ul className="space-y-4 pt-6 border-t border-slate-100 text-sm text-slate-600 font-medium">
                   {p.features.map((f, i) => (
                     <li key={i} className="flex items-start">
-                      <span className="text-emerald-500 font-bold mr-2 select-none">✓</span>
-                      <span>{f}</span>
+                      <div className="w-5 h-5 rounded-full bg-emerald-50 flex items-center justify-center mr-3 shrink-0 mt-0.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                      </div>
+                      <span className="leading-tight">{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -203,21 +224,25 @@ export default async function BillingConsolePage() {
 
               <div className="pt-8">
                 {p.current ? (
-                  <Button variant="secondary" className="w-full font-bold" disabled>
+                  <button className="w-full font-bold text-sm bg-slate-100 text-slate-500 px-6 py-3.5 rounded-xl cursor-default flex items-center justify-center">
                     Active Current Plan
-                  </Button>
+                  </button>
                 ) : (
                   <BillingPortalActions
                     priceId={p.priceId}
                     label={p.cta}
-                    className="w-full font-bold"
+                    className={`w-full font-bold text-sm px-6 py-3.5 rounded-xl flex items-center justify-center transition-all ${
+                      p.popular 
+                        ? "bg-brand-primary text-white hover:bg-brand-primary/90 shadow-md" 
+                        : "bg-white text-slate-900 border-2 border-slate-100 hover:border-brand-primary hover:text-brand-primary"
+                    }`}
                   />
                 )}
               </div>
-            </Card>
+            </div>
           ))}
         </div>
-      </div>
-    </div>
+      </MotionItem>
+    </MotionContainer>
   );
 }
