@@ -109,8 +109,13 @@ export default function LandingPage() {
       <div className="w-full bg-white/70 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50">
         <header className="max-w-6xl mx-auto h-16 px-6 flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
-            <span className="flex items-center justify-center w-7 h-7 bg-brand-primary text-white font-bold rounded-lg text-sm shadow-sm select-none">
-              ↺
+            <span className="flex items-center justify-center w-7 h-7 bg-brand-primary text-white rounded-lg shadow-sm select-none">
+              <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                <path d="M16 3h5v5" />
+                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                <path d="M8 21H3v-5" />
+              </svg>
             </span>
             <span className="text-lg font-bold tracking-tight text-slate-900">
               Backlos
@@ -142,7 +147,9 @@ export default function LandingPage() {
       {/* 2. Hero Section */}
       <section id="product" className="max-w-5xl mx-auto px-6 pt-24 pb-16 text-center space-y-8">
         <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-100 px-3.5 py-1 rounded-badge text-brand-primary text-xs font-bold uppercase tracking-wider select-none">
-          <span>✦</span>
+          <svg className="w-3.5 h-3.5 text-brand-primary animate-pulse" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
+          </svg>
           <span>55,000+ candidate closures processed</span>
         </div>
         
@@ -186,8 +193,19 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
-              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg rounded-xl border border-indigo-100 select-none">
-                🧠
+              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center rounded-xl border border-indigo-100 select-none">
+                <svg className="w-5 h-5 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <rect x="9" y="9" width="6" height="6" />
+                  <line x1="9" y1="1" x2="9" y2="3" />
+                  <line x1="15" y1="1" x2="15" y2="3" />
+                  <line x1="9" y1="21" x2="9" y2="23" />
+                  <line x1="15" y1="21" x2="15" y2="23" />
+                  <line x1="20" y1="9" x2="23" y2="9" />
+                  <line x1="20" y1="15" x2="23" y2="15" />
+                  <line x1="1" y1="9" x2="4" y2="9" />
+                  <line x1="1" y1="15" x2="4" y2="15" />
+                </svg>
               </div>
               <h3 className="text-base font-bold text-slate-900">AI-Optimized Feedback – No Effort Required</h3>
               <p className="text-xs text-slate-500 leading-relaxed font-medium">
@@ -196,8 +214,10 @@ export default function LandingPage() {
             </div>
 
             <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
-              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg rounded-xl border border-indigo-100 select-none">
-                ⚡
+              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center rounded-xl border border-indigo-100 select-none">
+                <svg className="w-5 h-5 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
               </div>
               <h3 className="text-base font-bold text-slate-900">Real-Time Insights – Smarter Coaching</h3>
               <p className="text-xs text-slate-500 leading-relaxed font-medium">
@@ -206,8 +226,18 @@ export default function LandingPage() {
             </div>
 
             <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
-              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg rounded-xl border border-indigo-100 select-none">
-                🌱
+              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center rounded-xl border border-indigo-100 select-none">
+                <svg className="w-5 h-5 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="4" y1="21" x2="4" y2="14" />
+                  <line x1="4" y1="10" x2="4" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12" y2="3" />
+                  <line x1="20" y1="21" x2="20" y2="16" />
+                  <line x1="20" y1="12" x2="20" y2="3" />
+                  <line x1="2" y1="14" x2="6" y2="14" />
+                  <line x1="10" y1="8" x2="14" y2="8" />
+                  <line x1="18" y1="16" x2="22" y2="16" />
+                </svg>
               </div>
               <h3 className="text-base font-bold text-slate-900">Flexible Rubrics – Tailored for You</h3>
               <p className="text-xs text-slate-500 leading-relaxed font-medium">
@@ -447,7 +477,9 @@ export default function LandingPage() {
                   <ul className="space-y-3.5 pt-6 border-t border-slate-100 text-xs text-slate-700 font-semibold">
                     {p.features.map((f, i) => (
                       <li key={i} className="flex items-start">
-                        <span className="text-emerald-500 font-bold mr-2.5 select-none">✓</span>
+                        <svg className="w-3.5 h-3.5 text-emerald-500 inline-block mr-2.5 select-none mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
                         <span>{f}</span>
                       </li>
                     ))}
@@ -465,10 +497,29 @@ export default function LandingPage() {
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] font-bold text-slate-400 tracking-wider uppercase pt-6">
-            <span>🛡️ 100% Safe Purchase</span>
-            <span>⏱️ 7-Day Money Back Guarantee</span>
-            <span>🚀 Delivery In &lt;24h</span>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] font-bold text-slate-400 tracking-wider uppercase pt-6 select-none">
+            <span className="flex items-center">
+              <svg className="w-4 h-4 text-slate-400 mr-1.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              100% Safe Purchase
+            </span>
+            <span className="flex items-center">
+              <svg className="w-4 h-4 text-slate-400 mr-1.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              7-Day Money Back Guarantee
+            </span>
+            <span className="flex items-center">
+              <svg className="w-4 h-4 text-slate-400 mr-1.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4.5 16.5c-1.5 1.25-2.5 3.5-2.5 3.5s2.25-1 3.5-2.5" />
+                <path d="M12 9c2-2 5-2 7-2 0 2 0 5-2 7l-9 9H3v-5z" />
+                <path d="M9 15l3-3" />
+                <path d="M17 3s3 1 3 3-1 3-3 3" />
+              </svg>
+              Delivery In &lt;24h
+            </span>
           </div>
         </div>
       </section>
@@ -500,33 +551,86 @@ export default function LandingPage() {
             <tbody className="divide-y divide-slate-100 text-slate-700 font-semibold">
               <tr>
                 <td className="px-6 py-4">AI-Powered Personalized Feedback</td>
-                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
-                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </td>
               </tr>
               <tr>
                 <td className="px-6 py-4">Real-Time Ingestion Grids</td>
-                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
-                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </td>
               </tr>
               <tr>
                 <td className="px-6 py-4">Customer Support</td>
-                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
-                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </td>
               </tr>
               <tr>
                 <td className="px-6 py-4">No Hidden Fees</td>
-                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
-                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </td>
               </tr>
               <tr>
                 <td className="px-6 py-4">Anti-Ghosting Safeguards</td>
-                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
-                <td className="px-6 py-4 text-rose-500 text-base">✗</td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </td>
               </tr>
               <tr>
                 <td className="px-6 py-4">Integrations via CSV/Excel</td>
-                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
-                <td className="px-6 py-4 text-emerald-500 text-base">✓</td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </td>
+                <td className="px-6 py-4">
+                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -549,22 +653,37 @@ export default function LandingPage() {
           </div>
 
           <div className="space-y-4">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className="bg-slate-50 border border-slate-200 rounded-btn p-5 transition-all select-none">
-                <button
+            {faqs.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div
+                  key={idx}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => toggleFaq(idx)}
-                  className="w-full flex items-center justify-between font-bold text-slate-800 text-xs uppercase tracking-wider text-left outline-none"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      toggleFaq(idx);
+                    }
+                  }}
+                  className={`bg-slate-50 border rounded-btn p-5 transition-all duration-200 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-brand-primary
+                    ${isOpen ? "border-brand-primary bg-indigo-50/20" : "border-slate-200 hover:border-slate-300 hover:bg-slate-100/50"}`}
                 >
-                  <span>{faq.q}</span>
-                  <span className="text-base text-slate-400 pl-4">{openFaq === idx ? "−" : "+"}</span>
-                </button>
-                {openFaq === idx && (
-                  <p className="text-xs text-slate-500 leading-relaxed font-medium pt-3 mt-3 border-t border-slate-200/60 animate-in fade-in duration-200">
-                    {faq.a}
-                  </p>
-                )}
-              </div>
-            ))}
+                  <div className="w-full flex items-center justify-between font-bold text-slate-800 text-xs uppercase tracking-wider text-left">
+                    <span>{faq.q}</span>
+                    <span className={`text-base font-bold transition-transform duration-200 pl-4 ${isOpen ? "text-brand-primary rotate-180" : "text-slate-400"}`}>
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </div>
+                  {isOpen && (
+                    <p className="text-xs text-slate-500 leading-relaxed font-medium pt-3 mt-3 border-t border-indigo-100 animate-in fade-in slide-in-from-top-1 duration-200">
+                      {faq.a}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -603,8 +722,13 @@ export default function LandingPage() {
       {/* 11. Footer Section */}
       <footer className="max-w-6xl mx-auto px-6 py-12 border-t border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between text-xs text-slate-400 space-y-4 md:space-y-0 select-none font-semibold">
         <div className="flex items-center space-x-2.5">
-          <span className="flex items-center justify-center w-6 h-6 bg-brand-primary text-white font-bold rounded-lg text-xs select-none shadow-sm">
-            ↺
+          <span className="flex items-center justify-center w-6 h-6 bg-brand-primary text-white rounded-lg shadow-sm">
+            <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+              <path d="M16 3h5v5" />
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+              <path d="M8 21H3v-5" />
+            </svg>
           </span>
           <span className="font-bold text-slate-900">Backlos Clover</span>
           <span>&middot; Maximize Your Candidate Brand Potential</span>
