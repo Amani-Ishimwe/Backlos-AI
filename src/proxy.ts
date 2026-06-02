@@ -8,7 +8,7 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
  * Global Next.js Middleware.
  * Secures B2B SaaS dashboard routes and keeps Auth sessions synchronized.
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   let supabaseResponse = NextResponse.next({

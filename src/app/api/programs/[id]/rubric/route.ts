@@ -7,6 +7,7 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id: programId } = await params;
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -25,7 +26,7 @@ export async function POST(
     // Verify program belongs to this organization
     const program = await prisma.program.findFirst({
       where: {
-        id: (await params).id,
+        id: programId,
         orgId: membership.orgId,
       },
     });
@@ -48,7 +49,7 @@ export async function POST(
 
     // 1. Find current ids in db first (outside of transaction)
     const existing = await prisma.rubricCriteria.findMany({
-      where: { programId: (await params).id },
+      where: { programId: programId },
       select: { id: true },
     });
 
@@ -80,7 +81,7 @@ export async function POST(
             description: c.description,
           },
           create: {
-            programId: (await params).id,
+            programId: programId,
             name: c.name,
             weight: c.weight,
             description: c.description,
