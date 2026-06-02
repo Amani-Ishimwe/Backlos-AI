@@ -119,36 +119,36 @@ export default async function BillingConsolePage() {
       </MotionItem>
 
       {/* Usage Meter Card - Premium Redesign */}
-      <MotionItem className="bg-slate-900 rounded-[2rem] p-8 md:p-10 border border-slate-800 shadow-2xl relative overflow-hidden text-white">
+      <MotionItem className="bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-sm relative overflow-hidden text-slate-900">
         <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
         
         <div className="relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 space-y-4 md:space-y-0">
             <div>
               <div className="flex items-center space-x-2 mb-2">
-                <Zap className="w-4 h-4 text-emerald-400" />
-                <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">Active Usage Quota</h2>
+                <Zap className="w-4 h-4 text-emerald-500" />
+                <h2 className="text-xs font-bold uppercase tracking-widest text-slate-500">Active Usage Quota</h2>
               </div>
-              <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Reset date: 1st day of next calendar month</p>
+              <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">Reset date: 1st day of next calendar month</p>
             </div>
             
-            <div className="flex items-center space-x-3 bg-white/5 border border-white/10 px-4 py-2 rounded-xl backdrop-blur-sm">
-              <span className="text-xs text-slate-400 font-semibold">Current Tier:</span>
+            <div className="flex items-center space-x-3 bg-slate-50 border border-slate-100 px-4 py-2 rounded-xl backdrop-blur-sm">
+              <span className="text-xs text-slate-500 font-semibold">Current Tier:</span>
               <span className="text-sm font-bold text-brand-primary uppercase tracking-wider bg-brand-primary/10 px-2 py-0.5 rounded-md">
                 {org.plan}
               </span>
             </div>
           </div>
           
-          <div className="bg-slate-950/50 rounded-2xl p-6 border border-slate-800/80">
-            <div className="flex items-center justify-between text-sm font-bold uppercase tracking-wider text-slate-300 mb-4">
+          <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+            <div className="flex items-center justify-between text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">
               <span>Served Candidates (This Month)</span>
-              <span className="text-white">
-                <span className="text-2xl">{activeUsage}</span> <span className="text-slate-500">/ {limit === Infinity ? "Unlimited" : limit}</span>
+              <span className="text-slate-900">
+                <span className="text-2xl">{activeUsage}</span> <span className="text-slate-400">/ {limit === Infinity ? "Unlimited" : limit}</span>
               </span>
             </div>
 
-            <div className="w-full h-3 bg-slate-800 rounded-full overflow-hidden shadow-inner mb-4">
+            <div className="w-full h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner mb-4">
               <div
                 className={`h-full rounded-full transition-all duration-1000 ease-out ${getUsageColor(usagePercent)}`}
                 style={{ width: `${Math.min(usagePercent, 100)}%` }}
@@ -157,17 +157,17 @@ export default async function BillingConsolePage() {
 
             <div className="flex items-center text-xs font-medium">
               {usagePercent >= 95 ? (
-                <span className="flex items-center text-rose-400 font-bold">
+                <span className="flex items-center text-rose-500 font-bold">
                   <AlertTriangle className="w-4 h-4 mr-1.5" />
                   CRITICAL: Quota almost full. AI queue feedback generation will be locked soon!
                 </span>
               ) : usagePercent >= 80 ? (
-                <span className="flex items-center text-amber-400 font-bold">
+                <span className="flex items-center text-amber-500 font-bold">
                   <AlertTriangle className="w-4 h-4 mr-1.5" />
                   Warning: You have consumed 80% of your plan limit.
                 </span>
               ) : (
-                <span className="flex items-center text-slate-400">
+                <span className="flex items-center text-slate-500">
                   <CheckCircle2 className="w-4 h-4 mr-1.5 text-emerald-500" />
                   Quotas sync automatically in real-time.
                 </span>

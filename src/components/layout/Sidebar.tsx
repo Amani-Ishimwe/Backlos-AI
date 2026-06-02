@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Badge from "@/components/ui/Badge";
-import { LayoutDashboard, FolderKanban, CreditCard, Sparkles } from "lucide-react";
+import { LayoutDashboard, FolderKanban, CreditCard, Sparkles, Settings } from "lucide-react";
 
 interface SidebarProps {
   orgName: string;
@@ -38,8 +38,13 @@ const Sidebar: React.FC<SidebarProps> = ({
       ],
     },
     {
-      title: "Settings",
+      title: "Configuration",
       items: [
+        {
+          label: "General Settings",
+          href: "/dashboard/settings",
+          icon: <Settings className="w-5 h-5 mr-3" />,
+        },
         {
           label: "Billing",
           href: "/dashboard/billing",
@@ -50,14 +55,14 @@ const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-[260px] h-screen bg-slate-950 border-r border-slate-800 flex flex-col shrink-0 select-none text-slate-300">
+    <aside className="w-[260px] h-screen bg-slate-50 border-r border-slate-200 flex flex-col shrink-0 select-none text-slate-900">
       {/* Brand Header */}
-      <div className="h-[72px] px-6 flex items-center border-b border-slate-800/60 shrink-0">
+      <div className="h-[72px] px-6 flex items-center border-b border-slate-200 shrink-0">
         <Link href="/dashboard" className="flex items-center space-x-3 group">
-          <div className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white font-bold rounded-xl shadow-[0_0_15px_rgba(108,99,255,0.4)] group-hover:scale-105 transition-transform">
+          <div className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white font-bold rounded-xl shadow-[0_4px_10px_rgba(108,99,255,0.3)] group-hover:scale-105 transition-transform">
             <Sparkles className="w-4 h-4" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">
+          <span className="text-xl font-bold tracking-tight text-slate-900">
             Backlos
           </span>
         </Link>
@@ -67,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       <nav className="flex-1 px-4 py-6 space-y-8 overflow-y-auto hide-scrollbar">
         {menuSections.map((section, idx) => (
           <div key={idx} className="space-y-1">
-            <span className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 block mb-3">
+            <span className="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-3">
               {section.title}
             </span>
             {section.items.map((item) => {
@@ -83,10 +88,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                   className={`flex items-center px-3 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
                     isActive
                       ? "bg-brand-primary/10 text-brand-primary shadow-sm"
-                      : "text-slate-400 hover:bg-slate-900 hover:text-white"
+                      : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                   }`}
                 >
-                  <div className={`${isActive ? "text-brand-primary" : "text-slate-500"}`}>
+                  <div className={`${isActive ? "text-brand-primary" : "text-slate-400"}`}>
                     {item.icon}
                   </div>
                   {item.label}
@@ -98,27 +103,27 @@ const Sidebar: React.FC<SidebarProps> = ({
       </nav>
 
       {/* Profile Footer */}
-      <div className="p-4 border-t border-slate-800/60 shrink-0 bg-slate-950/50 backdrop-blur-sm">
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-3 flex flex-col gap-3">
+      <div className="p-4 border-t border-slate-100 shrink-0 bg-white">
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3 flex flex-col gap-3">
           <div className="flex items-center space-x-3 overflow-hidden">
-            <div className="w-9 h-9 bg-gradient-to-br from-brand-primary to-purple-600 text-white font-bold flex items-center justify-center rounded-xl text-xs shrink-0 shadow-sm border border-brand-primary/20">
+            <div className="w-9 h-9 bg-brand-light text-brand-primary font-bold flex items-center justify-center rounded-xl text-xs shrink-0 shadow-sm border border-brand-primary/20">
               {userInitials}
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="text-sm font-bold text-white truncate">
+              <span className="text-sm font-bold text-slate-900 truncate">
                 {orgName}
               </span>
-              <span className="text-[10px] font-medium text-slate-400 truncate">
+              <span className="text-[10px] font-medium text-slate-500 truncate">
                 Workspace
               </span>
             </div>
           </div>
           
-          <div className="flex items-center justify-between border-t border-slate-800 pt-3">
+          <div className="flex items-center justify-between border-t border-slate-200 pt-3">
             <Link
               href={`/org/${orgSlug}`}
               target="_blank"
-              className="text-[10px] font-bold text-brand-primary hover:text-brand-light transition-colors uppercase tracking-wider"
+              className="text-[10px] font-bold text-brand-primary hover:text-brand-primary/80 transition-colors uppercase tracking-wider"
             >
               Public Profile ↗
             </Link>

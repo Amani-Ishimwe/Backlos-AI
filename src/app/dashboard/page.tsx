@@ -80,24 +80,24 @@ export default async function DashboardPage() {
   return (
     <MotionContainer className="space-y-8 pb-10">
       {/* Premium Welcome Banner */}
-      <MotionItem className="relative overflow-hidden rounded-[2rem] bg-slate-900 p-8 md:p-10 border border-slate-800 shadow-2xl">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/20 blur-[100px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
+      <MotionItem className="relative overflow-hidden rounded-[2rem] bg-white p-8 md:p-10 border border-slate-200 shadow-sm">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 blur-[100px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between space-y-6 md:space-y-0">
           <div>
             <div className="flex items-center space-x-3 mb-2">
               <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]"></span>
-              <span className="text-sm font-semibold text-slate-300 tracking-wide uppercase">Workspace Active</span>
+              <span className="text-sm font-semibold text-brand-primary tracking-wide uppercase">Workspace Active</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-2">
               Welcome back, {user.user_metadata?.full_name?.split(" ")[0] || "Organizer"}.
             </h1>
-            <p className="text-slate-400 text-base max-w-xl leading-relaxed">
+            <p className="text-slate-500 text-base max-w-xl leading-relaxed">
               Here is your organization's pulse. Deliver rapid closure to your applicants and build an unstoppable brand reputation.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3">
             <Link href={`/org/${org.slug}`} target="_blank" className="w-full sm:w-auto">
-              <button className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold text-sm px-6 py-3 rounded-full transition-all backdrop-blur-sm flex items-center justify-center">
+              <button className="w-full bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold text-sm px-6 py-3 rounded-full transition-all flex items-center justify-center shadow-sm">
                 <ShieldCheck className="w-4 h-4 mr-2" />
                 Public Profile
               </button>
@@ -304,31 +304,31 @@ export default async function DashboardPage() {
 
         {/* Reputation Panel (Right 1 col) */}
         <MotionItem className="lg:col-span-1">
-          <div className="bg-slate-900 rounded-[2rem] p-8 border border-slate-800 shadow-xl relative overflow-hidden flex flex-col h-full text-white">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+          <div className="bg-gradient-to-br from-brand-primary to-[#938EFF] rounded-[2rem] p-8 shadow-[0_12px_30px_rgba(108,99,255,0.2)] relative overflow-hidden flex flex-col h-full text-white">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
             
-            <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/10">
+            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-white mb-6 backdrop-blur-sm border border-white/20">
               <ShieldCheck className="w-6 h-6" />
             </div>
             
             <h3 className="text-xl font-bold mb-3">Build your reputation.</h3>
-            <p className="text-slate-400 text-sm font-medium leading-relaxed mb-8 flex-1">
+            <p className="text-white/90 text-sm font-medium leading-relaxed mb-8 flex-1">
               Top-tier candidates prefer programs that provide closure. Your accountability score is public. By maintaining a high dispatch ratio, you attract better talent in future cohorts.
             </p>
             
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-auto">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-2">
+            <div className="bg-white/10 border border-white/20 rounded-xl p-4 mt-auto">
+              <span className="text-[10px] text-white/80 font-bold uppercase tracking-wider block mb-2">
                 Public Transparency URL
               </span>
               <div className="flex items-center justify-between">
                 <Link 
                   href={`/org/${org.slug}`} 
                   target="_blank" 
-                  className="text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors truncate"
+                  className="text-sm font-bold text-white hover:text-white/90 transition-colors truncate"
                 >
                   backlos.app/org/{org.slug}
                 </Link>
-                <ArrowUpRight className="w-4 h-4 text-slate-500" />
+                <ArrowUpRight className="w-4 h-4 text-white/80" />
               </div>
             </div>
           </div>
