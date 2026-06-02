@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient();
@@ -24,7 +24,7 @@ export async function GET(
 
     const program = await prisma.program.findFirst({
       where: {
-        id: params.id,
+        id: (await params).id,
         orgId: membership.orgId,
       },
       include: {

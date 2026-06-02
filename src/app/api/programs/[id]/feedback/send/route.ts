@@ -7,7 +7,7 @@ import { generateFeedbackEmailHtml } from "@/emails/emailTemplate";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient();
@@ -33,7 +33,7 @@ export async function POST(
     // Verify program belongs to this organization
     const program = await prisma.program.findFirst({
       where: {
-        id: params.id,
+        id: (await params).id,
         orgId: org.id,
       },
       include: {

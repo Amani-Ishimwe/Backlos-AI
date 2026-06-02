@@ -12,7 +12,7 @@ import { getPlanDetails } from "@/lib/stripe";
 // ─────────────────────────────────────────────────────────────────────────────
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { searchParams } = new URL(request.url);
   const applicantId = searchParams.get("applicantId");
@@ -109,7 +109,7 @@ export async function POST(
   const { org } = membership;
 
   const program = await prisma.program.findFirst({
-    where: { id: params.id, orgId: org.id },
+    where: { id: (await params).id, orgId: org.id },
     include: { criteria: true, applicants: true },
   });
 

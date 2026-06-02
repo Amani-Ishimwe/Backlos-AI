@@ -5,13 +5,13 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import Badge from "@/components/ui/Badge";
 
 interface PublicOrgProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function PublicOrgProfilePage({ params }: PublicOrgProps) {
-  const { slug } = params;
+  const { slug } = await params;
 
   // 1. Fetch organization details public profile
   const org = await prisma.org.findUnique({

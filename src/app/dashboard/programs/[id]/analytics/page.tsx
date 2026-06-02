@@ -8,9 +8,7 @@ import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 
 interface AnalyticsProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export default async function ProgramAnalyticsPage({ params }: AnalyticsProps) {
@@ -24,7 +22,7 @@ export default async function ProgramAnalyticsPage({ params }: AnalyticsProps) {
 
   // 1. Fetch program details along with delivery status
   const program = await prisma.program.findUnique({
-    where: { id: params.id },
+    where: { id: (await params).id },
     include: {
       applicants: {
         include: {

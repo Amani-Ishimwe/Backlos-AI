@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient();
@@ -25,7 +25,7 @@ export async function POST(
     // Verify program belongs to this organization
     const program = await prisma.program.findFirst({
       where: {
-        id: params.id,
+        id: (await params).id,
         orgId: membership.orgId,
       },
     });
@@ -48,7 +48,7 @@ export async function POST(
 
     // 1. Find current ids in db first (outside of transaction)
     const existing = await prisma.rubricCriteria.findMany({
-      where: { programId: params.id },
+      where: { programId: (await params).id },
       select: { id: true },
     });
 
@@ -80,7 +80,7 @@ export async function POST(
             description: c.description,
           },
           create: {
-            programId: params.id,
+            programId: (await params).id,
             name: c.name,
             weight: c.weight,
             description: c.description,

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Papa from "papaparse";
@@ -12,9 +12,7 @@ import { toast } from "@/components/ui/Toast";
 import { isValidEmail } from "@/utils/csv";
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 interface ProgramDetail {
@@ -41,7 +39,7 @@ interface GridRow {
 
 export default function ApplicantsIntakePage({ params }: PageProps) {
   const router = useRouter();
-  const programId = params.id;
+  const programId = use(params).id;
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [program, setProgram] = useState<ProgramDetail | null>(null);

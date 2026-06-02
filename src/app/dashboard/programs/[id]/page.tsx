@@ -8,9 +8,7 @@ import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 
 interface ProgramOverviewProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export default async function ProgramOverviewPage({ params }: ProgramOverviewProps) {
@@ -24,7 +22,7 @@ export default async function ProgramOverviewPage({ params }: ProgramOverviewPro
 
   // 1. Fetch program and related entities
   const program = await prisma.program.findUnique({
-    where: { id: params.id },
+    where: { id: (await params).id },
     include: {
       criteria: true,
       applicants: {

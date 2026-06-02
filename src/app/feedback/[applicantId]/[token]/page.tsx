@@ -8,14 +8,11 @@ import Button from "@/components/ui/Button";
 import Link from "next/link";
 
 interface PublicReportProps {
-  params: {
-    applicantId: string;
-    token: string;
-  };
+  params: Promise<{ applicantId: string; token: string }>;
 }
 
 export default async function PublicReportPage({ params }: PublicReportProps) {
-  const { applicantId, token } = params;
+  const { applicantId, token } = await params;
 
   // 1. Cryptographically audit the URL signature to protect applicant privacy
   const isSignatureValid = verifyReportToken(applicantId, token);

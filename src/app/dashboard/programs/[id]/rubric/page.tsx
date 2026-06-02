@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
@@ -17,14 +17,12 @@ interface CriterionInput {
 }
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 export default function RubricBuilderPage({ params }: PageProps) {
   const router = useRouter();
-  const programId = params.id;
+  const programId = use(params).id;
 
   const [criteria, setCriteria] = useState<CriterionInput[]>([
     { name: "Technical Execution", weight: 40, description: "Depth of codebase architecture and complexity." },

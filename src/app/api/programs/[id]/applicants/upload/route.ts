@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient();
@@ -25,7 +25,7 @@ export async function POST(
     // Verify program belongs to this organization
     const program = await prisma.program.findFirst({
       where: {
-        id: params.id,
+        id: (await params).id,
         orgId: membership.orgId,
       },
     });
@@ -51,7 +51,7 @@ export async function POST(
 
       // 1. Upsert applicant
       const existingApp = await prisma.applicant.findFirst({
-        where: { programId: params.id, email },
+        where: { programId: (await params).id, email },
       });
 
       let applicant;
@@ -64,7 +64,7 @@ export async function POST(
       } else {
         applicant = await prisma.applicant.create({
           data: {
-            programId: params.id,
+            programId: (await params).id,
             name,
             email,
             status: status || "PENDING",
@@ -109,7 +109,7 @@ export async function POST(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = await createClient();
@@ -137,7 +137,7 @@ export async function DELETE(
     // Verify program belongs to this organization
     const program = await prisma.program.findFirst({
       where: {
-        id: params.id,
+        id: (await params).id,
         orgId: membership.orgId,
       },
     });
@@ -150,7 +150,7 @@ export async function DELETE(
     await prisma.applicant.delete({
       where: {
         id: applicantId,
-        programId: params.id,
+        programId: (await params).id,
       },
     });
 

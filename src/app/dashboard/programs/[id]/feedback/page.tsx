@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
@@ -11,9 +11,7 @@ import { toast } from "@/components/ui/Toast";
 import Spinner from "@/components/ui/Spinner";
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 interface FeedbackStatus {
@@ -53,7 +51,7 @@ interface ReportPreview {
 
 export default function AIFeedbackRoom({ params }: PageProps) {
   const router = useRouter();
-  const programId = params.id;
+  const programId = use(params).id;
 
   const [programName, setProgramName] = useState("");
   const [tonePreference, setTonePreference] = useState<"FRIENDLY" | "FORMAL" | "CONCISE">("FRIENDLY");
