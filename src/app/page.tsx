@@ -1,10 +1,24 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/Card";
-import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
+
+// Animation Variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -15,45 +29,42 @@ export default function LandingPage() {
 
   const plans = [
     {
-      name: "Starter Plan",
+      name: "Starter",
       price: "$49",
-      desc: "Perfect for single hackathons and standard grant registries looking to start anti-ghosting pipelines.",
+      desc: "Perfect for single hackathons and standard grant registries.",
       features: [
         "Up to 200 applicants / month",
         "Standard AI feedback reviews",
         "CSV Ingest & manual entries",
         "Resend email dispatch system",
-        "Public Accountability portal",
         "No long-term commitments",
       ],
       cta: "Start Free Trial",
       popular: false,
     },
     {
-      name: "Growth Plan",
+      name: "Growth",
       price: "$199",
-      desc: "Ideal for high-velocity accelerators, fellowships, and competitive job registry portals.",
+      desc: "Ideal for high-velocity accelerators and fellowships.",
       features: [
         "Up to 2,000 applicants / month",
         "Premium AI feedback engine",
         "Priority parallel compilation runs",
         "White-labeled applicant portals",
-        "Priority email dispatches & audits",
         "Anti-Ghosting daily reminders",
       ],
       cta: "Deploy Growth Plan",
       popular: true,
     },
     {
-      name: "Scale Plan",
+      name: "Scale",
       price: "$599",
-      desc: "Built for massive enterprise fellowships, universities, and large-scale government grant portals.",
+      desc: "Built for massive enterprise programs and grant portals.",
       features: [
         "Up to 10,000 applicants / month",
         "Advanced deep-personalized models",
         "SLA guaranteed dispatches",
         "Dedicated database clusters",
-        "Anti-Ghosting automated escalation",
         "24/7 Priority support hotline",
       ],
       cta: "Contact Enterprise",
@@ -75,10 +86,6 @@ export default function LandingPage() {
       a: "Absolutely. We route transactional template dispatches through premium Resend SMTP servers, ensuring high inbox deliverability rates and full brand consistency.",
     },
     {
-      q: "How do sandboxed developer redirects work?",
-      a: "During development or test modes, all outbound applicant emails are securely routed to Resend test inboxes. This protects real candidate inboxes from receiving accidental drafts.",
-    },
-    {
       q: "What is the anti-ghosting deadline alarm?",
       a: "It is an automated background cron daemon that checks program deadlines and sends slack/email notifications to coordinators before candidates feel neglected.",
     },
@@ -86,31 +93,31 @@ export default function LandingPage() {
 
   const testimonials = [
     {
-      quote: "We managed a global hackathon with over 500 developers. Previously, sending customized feedback took us a month. With Backlos, we generated and bulk dispatched personalized reports within 5 minutes. The developers loved learning exactly why they missed out!",
+      quote: "We managed a global hackathon with over 500 developers. With Backlos, we generated and bulk dispatched personalized reports within 5 minutes. The developers loved it!",
       author: "Jean Dev",
       role: "Fellowship Director",
     },
     {
-      quote: "Candidate ghosting was hurting our talent acquisition metrics. Backlos spreadsheet workspace makes it trivial to drop csv files, run on-the-fly syntax checks, and schedule anti-ghosting alarms. 100% recommended for high-velocity teams.",
+      quote: "Candidate ghosting was hurting our talent acquisition metrics. Backlos spreadsheet workspace makes it trivial to schedule anti-ghosting alarms. 100% recommended.",
       author: "Marie Noel",
       role: "HR Operations Manager",
     },
     {
-      quote: "As a participant, getting comprehensive evaluations on my submission was extremely refreshing. Instead of a standard cold rejection email, I received detailed improvement Areas and actionable next steps. It kept me highly engaged!",
+      quote: "Instead of a standard cold rejection email, I received detailed improvement Areas and actionable next steps. It kept me highly engaged!",
       author: "David K.",
       role: "Hackathon Applicant",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F8F5] text-slate-800 font-sans antialiased">
+    <div className="min-h-screen bg-[#FDFDFD] text-slate-900 font-sans antialiased overflow-hidden selection:bg-brand-primary/20 selection:text-brand-primary">
       
-      {/* 1. Transparent Header (Navbar) */}
-      <div className="w-full bg-white/70 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50">
-        <header className="max-w-6xl mx-auto h-16 px-6 flex items-center justify-between">
-          <div className="flex items-center space-x-2.5">
-            <span className="flex items-center justify-center w-7 h-7 bg-brand-primary text-white rounded-lg shadow-sm select-none">
-              <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Navbar - Glassmorphism */}
+      <div className="fixed top-0 w-full z-50 flex justify-center mt-4 px-4 pointer-events-none">
+        <header className="pointer-events-auto bg-white/70 backdrop-blur-xl border border-slate-200/60 rounded-full h-14 px-6 flex items-center justify-between w-full max-w-5xl shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
+          <div className="flex items-center space-x-2">
+            <span className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white rounded-full shadow-sm">
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
                 <path d="M16 3h5v5" />
                 <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
@@ -122,629 +129,452 @@ export default function LandingPage() {
             </span>
           </div>
           
-          <nav className="hidden md:flex items-center space-x-8 text-xs font-bold text-slate-500 uppercase tracking-wider">
+          <nav className="hidden md:flex items-center space-x-8 text-[13px] font-semibold text-slate-600">
             <a href="#product" className="hover:text-brand-primary transition-colors">Product</a>
-            <a href="#reviews" className="hover:text-brand-primary transition-colors">Reviews</a>
             <a href="#benefits" className="hover:text-brand-primary transition-colors">Benefits</a>
             <a href="#pricing" className="hover:text-brand-primary transition-colors">Pricing</a>
           </nav>
 
-          <div className="flex items-center space-x-4">
-            <Link href="/login">
-              <button className="text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-wider">
-                Sign In
+          <div className="flex items-center space-x-3">
+            <Link href="/login" className="hidden sm:block">
+              <button className="text-[13px] font-semibold text-slate-600 hover:text-slate-900 transition-colors px-3 py-2">
+                Log in
               </button>
             </Link>
             <Link href="/signup">
-              <Button variant="primary" size="sm" className="bg-brand-primary border-0 text-white font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-btn shadow-sm hover:opacity-95 transition-opacity">
+              <button className="bg-slate-900 hover:bg-slate-800 text-white font-semibold text-[13px] px-5 py-2 rounded-full shadow-sm transition-all duration-200 hover:scale-105 active:scale-95">
                 Get Started
-              </Button>
+              </button>
             </Link>
           </div>
         </header>
       </div>
 
-      {/* 2. Hero Section */}
-      <section id="product" className="max-w-5xl mx-auto px-6 pt-24 pb-16 text-center space-y-8">
-        <div className="inline-flex items-center space-x-2 bg-indigo-50 border border-indigo-100 px-3.5 py-1 rounded-badge text-brand-primary text-xs font-bold uppercase tracking-wider select-none">
-          <svg className="w-3.5 h-3.5 text-brand-primary animate-pulse" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z" />
-          </svg>
-          <span>55,000+ candidate closures processed</span>
-        </div>
+      {/* Hero Section */}
+      <section className="relative pt-36 pb-20 md:pt-48 md:pb-32 px-6 flex flex-col items-center text-center">
+        {/* Soft Background Gradients */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand-primary/10 blur-[120px] rounded-full pointer-events-none" />
         
-        <h1 className="text-4xl sm:text-7xl font-extrabold tracking-tight text-slate-900 leading-tight max-w-4xl mx-auto">
-          Put An End to Candidate Ghosting.
-        </h1>
-        
-        <p className="text-base sm:text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed font-medium">
-          Maximize your cohort's reputation index with Backlos, the AI-powered feedback delivery engine that auto-compiles and bulk dispatches structured feedback to every applicant automatically.
-        </p>
+        <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+          
+          <motion.div variants={fadeInUp} className="inline-flex items-center space-x-2 bg-white border border-slate-200/80 px-4 py-1.5 rounded-full text-slate-600 text-[13px] font-medium shadow-sm mb-8">
+            <span className="flex h-2 w-2 rounded-full bg-brand-primary"></span>
+            <span>Over 55,000 candidate closures processed</span>
+          </motion.div>
+          
+          <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tighter text-slate-900 leading-[1.05] mb-6">
+            Put An End to <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-[#938EFF]">Candidate Ghosting.</span>
+          </motion.h1>
+          
+          <motion.p variants={fadeInUp} className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium mb-10">
+            Maximize your cohort's reputation index with Backlos, the AI-powered feedback delivery engine that auto-compiles and bulk dispatches structured feedback to every applicant automatically.
+          </motion.p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-          <Link href="/signup" className="w-full sm:w-auto">
-            <Button variant="primary" size="lg" className="w-full sm:w-auto px-8 py-4 bg-brand-primary border-0 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:opacity-95 transition-all">
-              Start Free
-            </Button>
-          </Link>
-          <a href="#benefits" className="w-full sm:w-auto">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 border-slate-200 transition-all font-bold text-xs uppercase tracking-wider text-slate-700">
-              More Info
-            </Button>
-          </a>
-        </div>
-        
-        <p className="text-[10px] text-slate-400 font-bold italic tracking-wide">
-          *No credit card required, start free instantly.*
-        </p>
-      </section>
-
-      {/* 3. The Clover Advantages Section */}
-      <section id="benefits" className="bg-white border-y border-slate-100 py-24">
-        <div className="max-w-6xl mx-auto px-6 space-y-16">
-          <div className="text-center space-y-2">
-            <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
-              THE CLOVER ADVANTAGES
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-              Maximize Your Candidate Brand with Smart Automation
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
-              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center rounded-xl border border-indigo-100 select-none">
-                <svg className="w-5 h-5 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                  <rect x="9" y="9" width="6" height="6" />
-                  <line x1="9" y1="1" x2="9" y2="3" />
-                  <line x1="15" y1="1" x2="15" y2="3" />
-                  <line x1="9" y1="21" x2="9" y2="23" />
-                  <line x1="15" y1="21" x2="15" y2="23" />
-                  <line x1="20" y1="9" x2="23" y2="9" />
-                  <line x1="20" y1="15" x2="23" y2="15" />
-                  <line x1="1" y1="9" x2="4" y2="9" />
-                  <line x1="1" y1="15" x2="4" y2="15" />
+          <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-4">
+            <Link href="/signup">
+              <button className="bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold text-base px-8 py-4 rounded-full shadow-[0_8px_20px_rgba(108,99,255,0.25)] transition-all duration-200 hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center">
+                Start for free
+                <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-              </div>
-              <h3 className="text-base font-bold text-slate-900">AI-Optimized Feedback – No Effort Required</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                Leverage advanced generative models to automatically synthesize scores and evaluator notes, ensuring every rejected applicant receives deep-personalized evaluations.
-              </p>
-            </div>
+              </button>
+            </Link>
+            <a href="#benefits">
+              <button className="bg-white border border-slate-200 hover:border-slate-300 text-slate-700 font-semibold text-base px-8 py-4 rounded-full shadow-sm transition-all duration-200 hover:-translate-y-1 w-full sm:w-auto">
+                See how it works
+              </button>
+            </a>
+          </motion.div>
+          
+        </motion.div>
 
-            <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
-              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center rounded-xl border border-indigo-100 select-none">
-                <svg className="w-5 h-5 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                </svg>
+        {/* Dashboard Mockup Representation */}
+        <motion.div 
+          initial={{ opacity: 0, y: 60 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mt-20 w-full max-w-5xl mx-auto perspective-1000"
+        >
+          <div className="relative rounded-2xl md:rounded-[2rem] border border-slate-200/60 bg-white/50 backdrop-blur-xl p-2 md:p-4 shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/60 to-transparent pointer-events-none" />
+            <div className="w-full aspect-[16/9] bg-slate-50 rounded-xl md:rounded-2xl border border-slate-100 flex flex-col overflow-hidden">
+              {/* Fake Topbar */}
+              <div className="h-12 border-b border-slate-200 bg-white flex items-center px-4 space-x-2">
+                <div className="flex space-x-1.5">
+                  <div className="w-3 h-3 rounded-full bg-rose-400"></div>
+                  <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+                  <div className="w-3 h-3 rounded-full bg-emerald-400"></div>
+                </div>
+                <div className="ml-4 h-6 w-48 bg-slate-100 rounded-md"></div>
               </div>
-              <h3 className="text-base font-bold text-slate-900">Real-Time Insights – Smarter Coaching</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                Never keep applicants wondering where they stand. Track generation queues with live status indicators and glow progress metrics in real-time.
-              </p>
-            </div>
-
-            <div className="space-y-4 p-6 hover:bg-slate-50 rounded-btn transition-colors duration-200">
-              <div className="w-10 h-10 bg-indigo-50 text-brand-primary flex items-center justify-center rounded-xl border border-indigo-100 select-none">
-                <svg className="w-5 h-5 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="4" y1="21" x2="4" y2="14" />
-                  <line x1="4" y1="10" x2="4" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="12" />
-                  <line x1="12" y1="8" x2="12" y2="3" />
-                  <line x1="20" y1="21" x2="20" y2="16" />
-                  <line x1="20" y1="12" x2="20" y2="3" />
-                  <line x1="2" y1="14" x2="6" y2="14" />
-                  <line x1="10" y1="8" x2="14" y2="8" />
-                  <line x1="18" y1="16" x2="22" y2="16" />
-                </svg>
+              {/* Fake Content */}
+              <div className="flex-1 p-6 flex gap-6">
+                {/* Sidebar */}
+                <div className="w-48 hidden md:flex flex-col space-y-3">
+                  <div className="h-4 w-24 bg-slate-200 rounded-md mb-4"></div>
+                  <div className="h-8 w-full bg-slate-200 rounded-md"></div>
+                  <div className="h-8 w-full bg-slate-100 rounded-md"></div>
+                  <div className="h-8 w-full bg-slate-100 rounded-md"></div>
+                </div>
+                {/* Main Content */}
+                <div className="flex-1 flex flex-col space-y-6">
+                  <div className="h-8 w-1/3 bg-slate-200 rounded-md"></div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="h-24 bg-brand-light/40 rounded-xl border border-brand-border/30"></div>
+                    <div className="h-24 bg-slate-100 rounded-xl"></div>
+                    <div className="h-24 bg-slate-100 rounded-xl"></div>
+                  </div>
+                  <div className="flex-1 bg-white border border-slate-100 rounded-xl shadow-sm p-4 flex flex-col space-y-4">
+                    <div className="h-6 w-1/4 bg-slate-200 rounded-md"></div>
+                    <div className="flex-1 bg-slate-50 rounded-lg border border-slate-100"></div>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-base font-bold text-slate-900">Flexible Rubrics – Tailored for You</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                Define custom evaluation criteria parameters and weight balances (Design, Dev, Pitch) that perfectly suit your program cohort's unique goals.
-              </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* 4. Benefits Grid Section */}
-      <section className="py-24 max-w-6xl mx-auto px-6 space-y-16">
-        <div className="text-center space-y-2">
-          <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
-            BENEFITS
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-            Why We Shine?
+      {/* Bento Grid Features Section */}
+      <section id="benefits" className="py-24 px-6 max-w-6xl mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
+            Maximize your candidate brand.
           </h2>
+          <p className="text-lg text-slate-500 font-medium">Automate feedback and put an end to the silent treatment.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <h3 className="text-sm font-bold text-slate-900">Instant Compilations</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                Generate personalized reviews in seconds. Powered by 8x parallel worker queues to process massive applicant volumes effortlessly.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
+          
+          {/* Large Card 1 */}
+          <div className="md:col-span-2 bg-[#F6F6F9] rounded-[2rem] p-8 md:p-12 border border-slate-100 flex flex-col justify-between relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-primary/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 group-hover:bg-brand-primary/10 transition-colors duration-700" />
+            <div className="relative z-10 space-y-4 max-w-md">
+              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-brand-primary mb-6">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <line x1="9" y1="3" x2="9" y2="21" />
+                  <line x1="15" y1="3" x2="15" y2="21" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900">Instant Compilations</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">
+                Generate personalized reviews in seconds. Powered by parallel worker queues to process massive applicant volumes effortlessly without breaking a sweat.
               </p>
             </div>
-            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
-              <span>Parallel Processing</span>
-              <span className="text-brand-primary">Active</span>
+            {/* Visual Element */}
+            <div className="mt-8 h-48 w-full bg-white rounded-xl shadow-sm border border-slate-200/60 p-4 flex flex-col gap-2 relative z-10">
+              <div className="h-8 w-3/4 bg-slate-100 rounded-md"></div>
+              <div className="h-8 w-1/2 bg-slate-100 rounded-md"></div>
+              <div className="h-8 w-full bg-brand-light rounded-md"></div>
             </div>
-          </Card>
+          </div>
 
-          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <h3 className="text-sm font-bold text-slate-900">Real-Time Ingestion</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                Ingest evaluation spreadsheets or enter metrics cell-by-cell in our in-browser data grid. Built-in header checkers validate schema instantly.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
-              <span>CSV & Excel Grid</span>
-              <span className="text-brand-primary">Active</span>
-            </div>
-          </Card>
-
-          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <h3 className="text-sm font-bold text-slate-900">Flexible Rubrics</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                Establish custom criteria scales that grow with your accelerator. Adjust rubric weights seamlessly to align with new intake specs.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
-              <span>Adaptive Rubrics</span>
-              <span className="text-brand-primary">Active</span>
-            </div>
-          </Card>
-
-          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <h3 className="text-sm font-bold text-slate-900">Secure Sandboxed Relays</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+          {/* Small Card 1 */}
+          <div className="md:col-span-1 bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between relative">
+            <div className="space-y-4">
+              <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700 mb-6 border border-slate-100">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">Secure Sandboxed Relays</h3>
+              <p className="text-slate-500 font-medium leading-relaxed text-sm">
                 Protect real applicant inboxes during drafts. In development mode, every outbound template is securely redirected to a Resend test sandbox.
               </p>
             </div>
-            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
-              <span>Sandbox Relayers</span>
-              <span className="text-brand-primary">Active</span>
-            </div>
-          </Card>
+          </div>
 
-          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <h3 className="text-sm font-bold text-slate-900">Adaptive Reminders</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                Automated Inngest background cron routines check program dates, notifying managers to publish score reviews before cohorts feel abandoned.
+          {/* Small Card 2 */}
+          <div className="md:col-span-1 bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between relative">
+            <div className="space-y-4">
+              <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700 mb-6 border border-slate-100">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">Adaptive Reminders</h3>
+              <p className="text-slate-500 font-medium leading-relaxed text-sm">
+                Automated background routines check program dates, notifying managers to publish score reviews before cohorts feel abandoned.
               </p>
             </div>
-            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
-              <span>Anti-Ghosting Shield</span>
-              <span className="text-brand-primary">Active</span>
-            </div>
-          </Card>
+          </div>
 
-          <Card className="p-6 border-slate-200 bg-white hover:border-slate-300 transition-colors shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <h3 className="text-sm font-bold text-slate-900">Dedicated Support</h3>
-              <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                Access personalized setup advice and API documentation anytime from our operations team to help you optimize candidate experiences.
+          {/* Large Card 2 */}
+          <div className="md:col-span-2 bg-[#F6F6F9] rounded-[2rem] p-8 md:p-12 border border-slate-100 flex flex-col justify-between relative overflow-hidden group">
+            <div className="relative z-10 space-y-4 max-w-md">
+              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-brand-primary mb-6">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900">Flexible Rubrics</h3>
+              <p className="text-slate-500 font-medium leading-relaxed">
+                Establish custom criteria scales that grow with your accelerator. Adjust rubric weights seamlessly to align with new intake specs.
               </p>
             </div>
-            <div className="pt-4 border-t border-slate-50 mt-4 flex justify-between items-center text-[10px] font-bold text-slate-400 select-none">
-              <span>Dedicated Support</span>
-              <span className="text-brand-primary">Active</span>
+             {/* Visual Element */}
+             <div className="mt-8 h-48 w-full flex items-end gap-4 relative z-10 px-4">
+              <div className="w-1/4 bg-brand-border/40 h-24 rounded-t-xl"></div>
+              <div className="w-1/4 bg-brand-primary/60 h-32 rounded-t-xl"></div>
+              <div className="w-1/4 bg-brand-primary h-48 rounded-t-xl shadow-lg"></div>
+              <div className="w-1/4 bg-brand-light h-16 rounded-t-xl"></div>
             </div>
-          </Card>
+          </div>
+
         </div>
       </section>
 
-      {/* 5. Process Section */}
-      <section className="bg-white border-y border-slate-100 py-24">
-        <div className="max-w-6xl mx-auto px-6 space-y-16">
-          <div className="text-center space-y-2">
-            <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
-              PROCESS
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-              Our Simple Four-Step Approach
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative select-none">
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-indigo-50 text-brand-primary flex items-center justify-center font-extrabold text-lg rounded-xl border border-indigo-100 shadow-sm">
-                01
-              </div>
-              <h3 className="text-base font-bold text-slate-900">Simplified Onboarding</h3>
-              <ul className="text-xs text-slate-500 space-y-2 leading-relaxed font-medium list-disc pl-4">
-                <li>Configure your evaluation rubric in seconds.</li>
-                <li>Define metrics and weights summing to 100%.</li>
-                <li>Download clean ready-to-use CSV templates.</li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-indigo-50 text-brand-primary flex items-center justify-center font-extrabold text-lg rounded-xl border border-indigo-100 shadow-sm">
-                02
-              </div>
-              <h3 className="text-base font-bold text-slate-900">AI-Powered Ingest</h3>
-              <ul className="text-xs text-slate-500 space-y-2 leading-relaxed font-medium list-disc pl-4">
-                <li>Type candidate metrics directly in the grid.</li>
-                <li>Upload custom CSV/Excel sheets.</li>
-                <li>Dynamic header validations check score ranges.</li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-indigo-50 text-brand-primary flex items-center justify-center font-extrabold text-lg rounded-xl border border-indigo-100 shadow-sm">
-                03
-              </div>
-              <h3 className="text-base font-bold text-slate-900">Personalized Audit</h3>
-              <ul className="text-xs text-slate-500 space-y-2 leading-relaxed font-medium list-disc pl-4">
-                <li>Launch parallel compilation pools.</li>
-                <li>Verify report previews in your room.</li>
-                <li>Individually regenerate outliers with single clicks.</li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <div className="w-12 h-12 bg-indigo-50 text-brand-primary flex items-center justify-center font-extrabold text-lg rounded-xl border border-indigo-100 shadow-sm">
-                04
-              </div>
-              <h3 className="text-base font-bold text-slate-900">Transparent Dispatches</h3>
-              <ul className="text-xs text-slate-500 space-y-2 leading-relaxed font-medium list-disc pl-4">
-                <li>Approve and send bulk feedback emails.</li>
-                <li>Safe sandbox shields prevent leakages.</li>
-                <li>Track open dispatches via Resend logs.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Product Reviews Masonry Section */}
-      <section id="reviews" className="py-24 max-w-6xl mx-auto px-6 space-y-16">
-        <div className="text-center space-y-2">
-          <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
-            REVIEWS
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-            What Our Valued Program Managers Say
+      {/* Features Grid Section */}
+      <section id="features" className="py-24 px-6 max-w-6xl mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-slate-900">
+            Everything you need.
           </h2>
+          <p className="text-lg text-slate-500 font-medium">Powerful features to streamline your process from end to end.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((t, idx) => (
-            <Card key={idx} className="p-6 border-slate-200 bg-white shadow-sm flex flex-col justify-between hover:border-slate-300 transition-colors">
-              <p className="text-xs text-slate-600 leading-relaxed italic">
-                "{t.quote}"
-              </p>
-              <div className="flex items-center space-x-3 pt-4 border-t border-slate-50 mt-4">
-                <span className="w-8 h-8 rounded-full bg-indigo-50 text-brand-primary border border-indigo-100 flex items-center justify-center font-extrabold text-xs select-none uppercase">
-                  {t.author.slice(0, 2)}
-                </span>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-xs font-bold text-slate-800 capitalize">{t.author}</span>
-                  <span className="text-[10px] text-slate-400 truncate">{t.role}</span>
-                </div>
+          {[
+            {
+              title: "Real-Time Ingestion",
+              desc: "Connect directly to your applicant tracker via secure webhooks.",
+              icon: <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />,
+            },
+            {
+              title: "AI-Powered Audit",
+              desc: "Deep analysis of applicant profiles against your custom rubrics.",
+              icon: <> <path d="M12 2v20" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /> </>,
+            },
+            {
+              title: "Transparent Dispatches",
+              desc: "Every email sent is logged and tracked for delivery analytics.",
+              icon: <path d="M22 12h-4l-3 9L9 3l-3 9H2" />,
+            },
+            {
+              title: "Custom Rubrics",
+              desc: "Define what matters most. Tailor the grading scale to your cohort.",
+              icon: <> <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /> </>,
+            },
+            {
+              title: "Simplified Onboarding",
+              desc: "Get started in minutes with direct CSV imports and intuitive mapping.",
+              icon: <> <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><polyline points="17 11 19 13 23 9" /> </>,
+            },
+            {
+              title: "Dedicated Support",
+              desc: "24/7 priority assistance to ensure your program runs smoothly.",
+              icon: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
+            },
+          ].map((feature, i) => (
+            <div key={i} className="p-8 rounded-[2rem] bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200/60 flex flex-col items-start text-left">
+              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-brand-primary mb-6 shadow-sm border border-slate-200/50">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  {feature.icon}
+                </svg>
               </div>
-            </Card>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
+              <p className="text-slate-500 font-medium text-sm leading-relaxed">{feature.desc}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* 7. SaaS Pricing Grid Section */}
-      <section id="pricing" className="bg-white border-y border-slate-100 py-24">
-        <div className="max-w-6xl mx-auto px-6 space-y-16">
-          <div className="text-center space-y-2">
-            <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
-              PRICING
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-              Choose the Perfect Plan
-            </h2>
-            <p className="text-xs text-slate-500 max-w-md mx-auto font-medium">
-              We offer flexible pricing plans that align with where your business stands today and where it's headed.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {plans.map((p) => (
-              <Card
-                key={p.name}
-                className={`p-8 border-1.5 flex flex-col justify-between relative bg-white transition-all
-                  ${p.popular ? "border-brand-primary shadow-xl ring-2 ring-brand-primary ring-opacity-50" : "border-slate-200 shadow-sm"}`}
-              >
-                {p.popular && (
-                  <span className="absolute top-4 right-4 px-3 py-1 bg-indigo-50 border border-indigo-100 text-brand-primary text-[10px] font-bold uppercase tracking-wider rounded-badge">
-                    Most Popular
-                  </span>
-                )}
-
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900">{p.name}</h3>
-                    <p className="text-xs text-slate-400 mt-1.5 leading-normal font-medium">{p.desc}</p>
-                  </div>
-
-                  <div className="flex items-baseline space-x-1">
-                    <span className="text-4xl font-extrabold tracking-tight text-slate-900">{p.price}</span>
-                    <span className="text-xs font-semibold text-slate-400">/ month</span>
-                  </div>
-
-                  <ul className="space-y-3.5 pt-6 border-t border-slate-100 text-xs text-slate-700 font-semibold">
-                    {p.features.map((f, i) => (
-                      <li key={i} className="flex items-start">
-                        <svg className="w-3.5 h-3.5 text-emerald-500 inline-block mr-2.5 select-none mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
+      {/* Testimonials Masonry / Marquee Area */}
+      <section className="py-24 bg-slate-50 border-y border-slate-200/60 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6 mb-12 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Loved by program managers</h2>
+        </div>
+        
+        <div className="flex gap-6 px-6 overflow-x-auto pb-8 snap-x hide-scrollbar max-w-7xl mx-auto">
+          {testimonials.map((t, idx) => (
+            <div key={idx} className="min-w-[320px] md:min-w-[400px] snap-center bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col justify-between">
+              <div className="flex mb-6 text-brand-primary">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                ))}
+              </div>
+              <p className="text-base text-slate-700 font-medium leading-relaxed mb-8">
+                "{t.quote}"
+              </p>
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 rounded-full bg-brand-light flex items-center justify-center text-brand-primary font-bold text-lg">
+                  {t.author.charAt(0)}
                 </div>
-
-                <div className="pt-8">
-                  <Link href="/signup" className="w-full">
-                    <Button variant={p.popular ? "primary" : "outline"} className={`w-full font-bold shadow-sm ${p.popular ? "bg-brand-primary border-0 text-white hover:opacity-95" : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"}`}>
-                      {p.cta}
-                    </Button>
-                  </Link>
+                <div>
+                  <div className="font-bold text-slate-900">{t.author}</div>
+                  <div className="text-sm text-slate-500 font-medium">{t.role}</div>
                 </div>
-              </Card>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] font-bold text-slate-400 tracking-wider uppercase pt-6 select-none">
-            <span className="flex items-center">
-              <svg className="w-4 h-4 text-slate-400 mr-1.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-              100% Safe Purchase
-            </span>
-            <span className="flex items-center">
-              <svg className="w-4 h-4 text-slate-400 mr-1.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-              7-Day Money Back Guarantee
-            </span>
-            <span className="flex items-center">
-              <svg className="w-4 h-4 text-slate-400 mr-1.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4.5 16.5c-1.5 1.25-2.5 3.5-2.5 3.5s2.25-1 3.5-2.5" />
-                <path d="M12 9c2-2 5-2 7-2 0 2 0 5-2 7l-9 9H3v-5z" />
-                <path d="M9 15l3-3" />
-                <path d="M17 3s3 1 3 3-1 3-3 3" />
-              </svg>
-              Delivery In &lt;24h
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* 8. Competitor Comparison Section */}
-      <section className="py-24 max-w-4xl mx-auto px-6 space-y-16">
-        <div className="text-center space-y-2">
-          <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
-            COMPARISON
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-            Our Value vs. Competitor Value
-          </h2>
-          <p className="text-xs text-slate-500 max-w-md mx-auto font-medium">
-            Compare our SaaS to standard applicant tracking tools and discover how we protect brand credibility, eliminate ghosting, and offer greater feedback flexibility.
-          </p>
-        </div>
-
-        {/* Comparison Table */}
-        <div className="bg-white border border-slate-200 rounded-btn overflow-hidden shadow-sm">
-          <table className="min-w-full divide-y divide-slate-100 text-left text-xs bg-white">
-            <thead className="bg-slate-50 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-              <tr>
-                <th className="px-6 py-4">Features</th>
-                <th className="px-6 py-4 text-brand-primary font-extrabold">Backlos AI Engine</th>
-                <th className="px-6 py-4">Standard ATS</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-700 font-semibold">
-              <tr>
-                <td className="px-6 py-4">AI-Powered Personalized Feedback</td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </td>
-              </tr>
-              <tr>
-                <td className="px-6 py-4">Real-Time Ingestion Grids</td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </td>
-              </tr>
-              <tr>
-                <td className="px-6 py-4">Customer Support</td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </td>
-              </tr>
-              <tr>
-                <td className="px-6 py-4">No Hidden Fees</td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </td>
-              </tr>
-              <tr>
-                <td className="px-6 py-4">Anti-Ghosting Safeguards</td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </td>
-              </tr>
-              <tr>
-                <td className="px-6 py-4">Integrations via CSV/Excel</td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </td>
-                <td className="px-6 py-4">
-                  <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* 9. FAQs Section */}
-      <section className="bg-white border-t border-slate-100 py-24">
-        <div className="max-w-3xl mx-auto px-6 space-y-16">
-          <div className="text-center space-y-2">
-            <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
-              FAQ'S
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-              Got a quick question?
-            </h2>
-            <p className="text-xs text-slate-500 font-medium">
-              We're here to help you make the right decision. Explore our frequently asked questions and find answers below.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => toggleFaq(idx)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      toggleFaq(idx);
-                    }
-                  }}
-                  className={`bg-slate-50 border rounded-btn p-5 transition-all duration-200 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-brand-primary
-                    ${isOpen ? "border-brand-primary bg-indigo-50/20" : "border-slate-200 hover:border-slate-300 hover:bg-slate-100/50"}`}
-                >
-                  <div className="w-full flex items-center justify-between font-bold text-slate-800 text-xs uppercase tracking-wider text-left">
-                    <span>{faq.q}</span>
-                    <span className={`text-base font-bold transition-transform duration-200 pl-4 ${isOpen ? "text-brand-primary rotate-180" : "text-slate-400"}`}>
-                      {isOpen ? "−" : "+"}
-                    </span>
-                  </div>
-                  {isOpen && (
-                    <p className="text-xs text-slate-500 leading-relaxed font-medium pt-3 mt-3 border-t border-indigo-100 animate-in fade-in slide-in-from-top-1 duration-200">
-                      {faq.a}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 10. Call to Action Banner Section */}
-      <section className="max-w-6xl mx-auto px-6 py-12">
-        <div className="relative rounded-2xl overflow-hidden p-12 bg-white border border-slate-200 text-center space-y-6 shadow-xl select-none">
-          <span className="text-[10px] text-brand-primary font-bold uppercase tracking-widest block select-none">
-            KEY TAKEAWAYS
-          </span>
-          
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">
-            Start Delivering Candidate Closure and Protecting Your Brand Today.
-          </h2>
-          <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed font-medium">
-            Experience the power of automated, constructive review loops. Get started now to boost program trust indexes and candidate retention scales.
-          </p>
-          <div className="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link href="/signup">
-              <Button size="lg" className="bg-brand-primary hover:opacity-95 text-white border-0 font-bold text-xs uppercase tracking-wider px-8 py-4 shadow-md">
-                Get Started
-              </Button>
-            </Link>
-            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider p-2">
-              Not sure if we're a fit?
+              </div>
             </div>
-            <Link href="/signup">
-              <Button size="lg" variant="outline" className="bg-slate-50 border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs uppercase tracking-wider px-8 py-4 shadow-sm">
-                Schedule A Call
-              </Button>
-            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-32 px-6 max-w-6xl mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
+            Simple, transparent pricing.
+          </h2>
+          <p className="text-lg text-slate-500 font-medium">Choose the perfect plan for your program.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          {plans.map((p, idx) => (
+            <div
+              key={p.name}
+              className={`relative rounded-[2rem] p-8 md:p-10 flex flex-col bg-white transition-all duration-300
+                ${p.popular 
+                  ? "border-2 border-brand-primary shadow-[0_20px_40px_rgba(108,99,255,0.15)] md:-translate-y-4 z-10 scale-105" 
+                  : "border border-slate-200 shadow-sm hover:shadow-md"
+                }`}
+            >
+              {p.popular && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-primary text-white text-[11px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-full shadow-sm">
+                  Most Popular
+                </div>
+              )}
+
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{p.name}</h3>
+                <p className="text-sm text-slate-500 font-medium h-10">{p.desc}</p>
+              </div>
+
+              <div className="mb-8 flex items-baseline text-slate-900">
+                <span className="text-5xl font-extrabold tracking-tight">{p.price}</span>
+                <span className="text-base text-slate-500 font-medium ml-2">/mo</span>
+              </div>
+
+              <Link href="/signup" className="w-full mb-8">
+                <button className={`w-full py-4 rounded-full font-bold text-sm transition-all duration-200
+                  ${p.popular 
+                    ? "bg-brand-primary text-white hover:bg-brand-primary/90 shadow-md" 
+                    : "bg-slate-50 text-slate-900 hover:bg-slate-100 border border-slate-200"
+                  }`}>
+                  {p.cta}
+                </button>
+              </Link>
+
+              <ul className="space-y-4 text-sm text-slate-600 font-medium">
+                {p.features.map((f, i) => (
+                  <li key={i} className="flex items-center">
+                    <div className="w-5 h-5 rounded-full bg-brand-light flex items-center justify-center mr-3 shrink-0">
+                      <svg className="w-3 h-3 text-brand-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </div>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-24 px-6 max-w-3xl mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+            Frequently asked questions
+          </h2>
+        </div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <div
+                key={idx}
+                onClick={() => toggleFaq(idx)}
+                className={`bg-white border rounded-2xl p-6 cursor-pointer transition-all duration-200
+                  ${isOpen ? "border-slate-300 shadow-sm" : "border-slate-200 hover:border-slate-300"}`}
+              >
+                <div className="flex justify-between items-center text-slate-900 font-semibold text-base">
+                  <span>{faq.q}</span>
+                  <span className={`transform transition-transform duration-200 flex-shrink-0 ml-4 ${isOpen ? "rotate-45" : "rotate-0"}`}>
+                    <svg className="w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </span>
+                </div>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="pt-4 text-slate-500 font-medium leading-relaxed">
+                        {faq.a}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* CTA Footer Banner */}
+      <section className="py-24 px-6">
+        <div className="max-w-5xl mx-auto bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/20 blur-[100px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/20 blur-[100px] rounded-full pointer-events-none" />
+          
+          <div className="relative z-10 space-y-8 max-w-2xl mx-auto flex flex-col items-center">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+              Ready to automate your candidate feedback?
+            </h2>
+            <p className="text-lg text-slate-300 font-medium">
+              Join hundreds of programs providing closure and protecting their brand reputation.
+            </p>
+            <div className="pt-4 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <Link href="/signup" className="w-full sm:w-auto">
+                <button className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-semibold text-base px-8 py-4 rounded-full transition-all">
+                  Get Started Now
+                </button>
+              </Link>
+              <Link href="/contact" className="w-full sm:w-auto">
+                <button className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold text-base px-8 py-4 rounded-full transition-all backdrop-blur-sm">
+                  Contact Sales
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 11. Footer Section */}
-      <footer className="max-w-6xl mx-auto px-6 py-12 border-t border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between text-xs text-slate-400 space-y-4 md:space-y-0 select-none font-semibold">
-        <div className="flex items-center space-x-2.5">
-          <span className="flex items-center justify-center w-6 h-6 bg-brand-primary text-white rounded-lg shadow-sm">
-            <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-              <path d="M16 3h5v5" />
-              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-              <path d="M8 21H3v-5" />
-            </svg>
-          </span>
-          <span className="font-bold text-slate-900">Backlos Clover</span>
-          <span>&middot; Maximize Your Candidate Brand Potential</span>
-        </div>
-
-        <div className="flex items-center space-x-6">
-          <Link href="/privacy" className="hover:text-brand-primary transition-colors">Privacy Policy</Link>
-          <Link href="/terms" className="hover:text-brand-primary transition-colors">Terms of Service</Link>
-          <a href="mailto:support@backlos.app" className="hover:text-brand-primary transition-colors">Contact Support</a>
-        </div>
-
-        <div className="text-[10px]">
-          <span>© 2024 Clover Template &bull; Made by Framebase &bull; Rwanda &bull; 2026</span>
+      {/* Simple Footer */}
+      <footer className="py-12 px-6 border-t border-slate-200 text-center text-slate-500 text-sm font-medium">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center space-x-2">
+             <span className="w-6 h-6 bg-slate-900 text-white rounded-md flex items-center justify-center">
+               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                <path d="M16 3h5v5" />
+                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                <path d="M8 21H3v-5" />
+              </svg>
+             </span>
+             <span className="font-bold text-slate-900">Backlos</span>
+          </div>
+          <div className="space-x-6">
+            <a href="#" className="hover:text-slate-900 transition-colors">Privacy</a>
+            <a href="#" className="hover:text-slate-900 transition-colors">Terms</a>
+            <a href="#" className="hover:text-slate-900 transition-colors">Support</a>
+          </div>
+          <div>© {new Date().getFullYear()} Backlos. All rights reserved.</div>
         </div>
       </footer>
-
     </div>
   );
 }
