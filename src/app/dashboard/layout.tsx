@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import prisma from "@/lib/prisma";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
+import PendoIdentify from "@/components/PendoIdentify";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -46,6 +47,20 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
+      <PendoIdentify
+        visitorId={user.id}
+        visitorEmail={user.email || ""}
+        visitorFullName={user.user_metadata?.full_name || ""}
+        visitorOrgId={membership.orgId}
+        visitorRole={membership.role}
+        visitorMemberCreatedAt={membership.createdAt.toISOString()}
+        accountId={org.id}
+        accountName={org.name}
+        accountSlug={org.slug}
+        accountPlan={org.plan}
+        accountFeedbackDeliveryScore={org.feedbackDeliveryScore}
+        accountCreatedAt={org.createdAt.toISOString()}
+      />
       {/* 260px Sidebar */}
       <Sidebar
         orgName={org.name}

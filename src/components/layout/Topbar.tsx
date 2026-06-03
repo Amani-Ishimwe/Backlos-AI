@@ -17,6 +17,7 @@ const Topbar: React.FC<TopbarProps> = ({ userInitials, userEmail }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLogout = async () => {
+    pendo.clearSession();
     await supabase.auth.signOut();
     router.push("/login");
     router.refresh();
