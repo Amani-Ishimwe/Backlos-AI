@@ -49,6 +49,9 @@ interface ReportPreview {
   nextSteps: string[];
 }
 
+// Module-level dedup guard for feedback_generation_completed polling event
+const trackedGenerationCompleteIds = new Set<string>();
+
 export default function AIFeedbackRoom({ params }: PageProps) {
   const router = useRouter();
   const programId = use(params).id;
@@ -121,6 +124,18 @@ export default function AIFeedbackRoom({ params }: PageProps) {
             setIsGenerating(active);
 
             if (!active && resJson.data.ready > 0) {
+              // Track feedback generation completed (deduped per programId)
+              if (!trackedGenerationCompleteIds.has(programId) && typeof window !== "undefined" && window.pendo) {
+                trackedGenerationCompleteIds.add(programId);
+                window.pendo.track("feedback_generation_completed", {
+                  programId,
+                  totalApplicants: resJson.data.total,
+                  readyCount: resJson.data.ready,
+                  errorCount: resJson.data.error,
+                  percentComplete: resJson.data.percentComplete,
+                });
+              }
+
               toast.success("Feedback reports compiled successfully!");
               loadReportPreviews();
             }
@@ -163,6 +178,17 @@ export default function AIFeedbackRoom({ params }: PageProps) {
         throw new Error(resJson.error || "Generation kickoff failed.");
       }
 
+      // Track feedback generation started
+      if (typeof window !== "undefined" && window.pendo) {
+        window.pendo.track("feedback_generation_started", {
+          programId,
+          programName,
+        });
+      }
+
+      // Reset dedup guard so completion can be tracked for this new generation
+      trackedGenerationCompleteIds.delete(programId);
+
       toast.success(`Launched AI Feedback Engine!`);
       fetchProgramAndStatus();
     } catch (err: any) {
@@ -180,6 +206,14 @@ export default function AIFeedbackRoom({ params }: PageProps) {
 
       const resJson = await res.json();
       if (!res.ok) throw new Error(resJson.error);
+
+      // Track individual report regeneration
+      if (typeof window !== "undefined" && window.pendo) {
+        window.pendo.track("feedback_report_regenerated", {
+          programId,
+          applicantId,
+        });
+      }
 
       toast.success("Constructive review updated successfully!");
       loadReportPreviews();
@@ -210,6 +244,15 @@ export default function AIFeedbackRoom({ params }: PageProps) {
         errorMessage: "",
         sentCount: resJson.data.sent,
       });
+
+      // Track feedback emails dispatched
+      if (typeof window !== "undefined" && window.pendo) {
+        window.pendo.track("feedback_emails_dispatched", {
+          programId,
+          programName,
+          sentCount: resJson.data.sent,
+        });
+      }
 
       toast.success(`Successfully sent ${resJson.data.sent} feedback emails!`);
       fetchProgramAndStatus();

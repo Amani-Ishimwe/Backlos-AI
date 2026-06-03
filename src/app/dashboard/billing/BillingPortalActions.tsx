@@ -32,6 +32,13 @@ export default function BillingPortalActions({
         const resJson = await res.json();
         if (!res.ok) throw new Error(resJson.error || "Checkout failed");
 
+        // Track plan upgrade initiation
+        if (typeof window !== "undefined" && window.pendo) {
+          window.pendo.track("plan_upgrade_initiated", {
+            priceId,
+          });
+        }
+
         // Redirect to Stripe checkout
         window.location.href = resJson.url;
       } else {
@@ -42,6 +49,11 @@ export default function BillingPortalActions({
 
         const resJson = await res.json();
         if (!res.ok) throw new Error(resJson.error || "Portal generation failed");
+
+        // Track billing portal access
+        if (typeof window !== "undefined" && window.pendo) {
+          window.pendo.track("billing_portal_opened", {});
+        }
 
         // Redirect to Stripe portal dashboard
         window.location.href = resJson.url;

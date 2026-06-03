@@ -118,6 +118,16 @@ export default function RubricBuilderPage({ params }: PageProps) {
         throw new Error(resJson.error || "Failed to save rubric.");
       }
 
+      // Track rubric configuration
+      if (typeof window !== "undefined" && window.pendo) {
+        window.pendo.track("rubric_configured", {
+          programId,
+          criteriaCount: criteria.length,
+          criteriaNames: criteria.map((c) => c.name).join(", "),
+          totalWeight,
+        });
+      }
+
       toast.success("Rubric criteria successfully saved!");
       // Proceed to the next step (Applicant Upload)
       router.push(`/dashboard/programs/${programId}/applicants`);

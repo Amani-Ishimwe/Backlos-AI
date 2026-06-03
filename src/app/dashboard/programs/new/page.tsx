@@ -47,6 +47,17 @@ export default function NewProgramPage() {
         throw new Error(resJson.error || "Failed to create program.");
       }
 
+      // Track program creation
+      if (typeof window !== "undefined" && window.pendo) {
+        window.pendo.track("program_created", {
+          programId: resJson.data.id,
+          programName: name,
+          programType: type,
+          tonePreference,
+          hasDecisionDeadline: !!decisionDeadline,
+        });
+      }
+
       // Redirect to rubric builder of this program
       router.push(`/dashboard/programs/${resJson.data.id}/rubric`);
     } catch (err: any) {

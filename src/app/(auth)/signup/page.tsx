@@ -66,6 +66,15 @@ export default function SignupPage() {
         throw new Error(resJson.error || "Failed to initialize organization.");
       }
 
+      // Track successful signup
+      if (typeof window !== "undefined" && window.pendo) {
+        window.pendo.track("user_signed_up", {
+          orgName,
+          authProvider: "password",
+          plan: "FREE",
+        });
+      }
+
       // 3. Redirect to dashboard on success
       router.push("/dashboard");
       router.refresh();

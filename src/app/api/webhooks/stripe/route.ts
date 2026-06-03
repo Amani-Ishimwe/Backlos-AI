@@ -47,6 +47,10 @@ export async function POST(request: Request) {
           const priceId = subscription.items.data[0].price.id;
           const plan = getPlanFromPriceId(priceId);
 
+          // Fetch previous plan before updating
+          const prevOrg = await prisma.org.findUnique({ where: { id: orgId } });
+          const previousPlan = prevOrg?.plan || "FREE";
+
           await prisma.org.update({
             where: { id: orgId },
             data: {
@@ -55,6 +59,34 @@ export async function POST(request: Request) {
               plan,
             },
           });
+
+          // Server-side Pendo track: plan changed
+          try {
+            await fetch("https://data.pendo.io/data/track", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "x-pendo-integration-key": "709225bf-7a1a-4eee-8774-717dac3dcf10",
+              },
+              body: JSON.stringify({
+                type: "track",
+                event: "plan_changed",
+                visitorId: "system",
+                accountId: orgId,
+                timestamp: Date.now(),
+                properties: {
+                  orgId,
+                  previousPlan,
+                  newPlan: plan,
+                  stripeEventType: type,
+                  subscriptionId,
+                  customerId: session.customer as string,
+                },
+              }),
+            });
+          } catch (e) {
+            console.error("Failed to send Pendo track event:", e);
+          }
         }
         break;
       }
@@ -71,6 +103,8 @@ export async function POST(request: Request) {
         });
 
         if (org) {
+          const previousPlan = org.plan;
+
           await prisma.org.update({
             where: { id: org.id },
             data: {
@@ -78,6 +112,36 @@ export async function POST(request: Request) {
               plan,
             },
           });
+
+          // Server-side Pendo track: plan changed (only if plan actually changed)
+          if (previousPlan !== plan) {
+            try {
+              await fetch("https://data.pendo.io/data/track", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "x-pendo-integration-key": "709225bf-7a1a-4eee-8774-717dac3dcf10",
+                },
+                body: JSON.stringify({
+                  type: "track",
+                  event: "plan_changed",
+                  visitorId: "system",
+                  accountId: org.id,
+                  timestamp: Date.now(),
+                  properties: {
+                    orgId: org.id,
+                    previousPlan,
+                    newPlan: plan,
+                    stripeEventType: type,
+                    subscriptionId: subscription.id,
+                    customerId,
+                  },
+                }),
+              });
+            } catch (e) {
+              console.error("Failed to send Pendo track event:", e);
+            }
+          }
         }
         break;
       }
@@ -91,6 +155,8 @@ export async function POST(request: Request) {
         });
 
         if (org) {
+          const previousPlan = org.plan;
+
           // Downgrade organization back to FREE status
           await prisma.org.update({
             where: { id: org.id },
@@ -99,6 +165,34 @@ export async function POST(request: Request) {
               plan: "FREE",
             },
           });
+
+          // Server-side Pendo track: plan changed (subscription deleted)
+          try {
+            await fetch("https://data.pendo.io/data/track", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "x-pendo-integration-key": "709225bf-7a1a-4eee-8774-717dac3dcf10",
+              },
+              body: JSON.stringify({
+                type: "track",
+                event: "plan_changed",
+                visitorId: "system",
+                accountId: org.id,
+                timestamp: Date.now(),
+                properties: {
+                  orgId: org.id,
+                  previousPlan,
+                  newPlan: "FREE",
+                  stripeEventType: type,
+                  subscriptionId: subscription.id,
+                  customerId,
+                },
+              }),
+            });
+          } catch (e) {
+            console.error("Failed to send Pendo track event:", e);
+          }
         }
         break;
       }

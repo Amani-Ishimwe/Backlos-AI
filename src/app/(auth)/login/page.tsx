@@ -41,6 +41,14 @@ export default function LoginPage() {
         });
 
         if (error) throw error;
+
+        // Track magic link login
+        if (typeof window !== "undefined" && window.pendo) {
+          window.pendo.track("user_logged_in", {
+            authMethod: "magic_link",
+          });
+        }
+
         setMessage({
           text: "Check your email for a secure passwordless login link!",
           isError: false,
@@ -59,6 +67,13 @@ export default function LoginPage() {
         });
 
         if (error) throw error;
+
+        // Track password login
+        if (typeof window !== "undefined" && window.pendo) {
+          window.pendo.track("user_logged_in", {
+            authMethod: "password",
+          });
+        }
 
         // Redirect to dashboard
         router.push("/dashboard");
