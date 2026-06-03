@@ -74,6 +74,33 @@ export default async function PublicReportPage({ params }: PublicReportProps) {
     console.error("Failed to update opened statistics:", error);
   }
 
+  // Server-side Pendo track: feedback report viewed
+  try {
+    await fetch("https://data.pendo.io/data/track", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-pendo-integration-key": "709225bf-7a1a-4eee-8774-717dac3dcf10",
+      },
+      body: JSON.stringify({
+        type: "track",
+        event: "feedback_report_viewed",
+        visitorId: applicant.id,
+        accountId: program.org.id,
+        timestamp: Date.now(),
+        properties: {
+          applicantId: applicant.id,
+          programId: program.id,
+          programName: program.name,
+          orgName: program.org.name,
+          applicantStatus: applicant.status,
+        },
+      }),
+    });
+  } catch (error) {
+    console.error("Failed to send Pendo track event:", error);
+  }
+
   // Calculate pool metrics to display criteria averages
   // We can fetch scores map to show criteria bars
   const criteriaList = program.criteria.map((c) => {

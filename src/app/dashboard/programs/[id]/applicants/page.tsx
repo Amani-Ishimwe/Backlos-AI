@@ -214,6 +214,17 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
         setGridRows(parsedRows);
         setIsSyncing(false);
         setSyncStatus({ status: "idle", createdCount: 0, updatedCount: 0, errorMessage: "" });
+
+        // Track CSV file import
+        if (typeof window !== "undefined" && window.pendo) {
+          window.pendo.track("applicants_file_imported", {
+            programId,
+            fileFormat: "csv",
+            applicantCount: parsedRows.length,
+            criteriaCount: program.criteria.length,
+          });
+        }
+
         toast.success(`Populated workspace grid with ${parsedRows.length} candidates!`);
       },
       error: (error) => {
@@ -280,6 +291,17 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
         setGridRows(parsedRows);
         setIsSyncing(false);
         setSyncStatus({ status: "idle", createdCount: 0, updatedCount: 0, errorMessage: "" });
+
+        // Track Excel file import
+        if (typeof window !== "undefined" && window.pendo) {
+          window.pendo.track("applicants_file_imported", {
+            programId,
+            fileFormat: "excel",
+            applicantCount: parsedRows.length,
+            criteriaCount: program.criteria.length,
+          });
+        }
+
         toast.success(`Populated workspace grid with ${parsedRows.length} candidates!`);
       } catch (err: any) {
         setIsSyncing(false);
@@ -326,6 +348,15 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
       XLSX.utils.book_append_sheet(wb, ws, "Template");
       XLSX.writeFile(wb, `${program.name}_template.xlsx`);
     }
+    // Track template download
+    if (typeof window !== "undefined" && window.pendo) {
+      window.pendo.track("template_downloaded", {
+        programId,
+        fileFormat: format,
+        programName: program.name,
+      });
+    }
+
     toast.success(`Downloaded template as ${format.toUpperCase()}`);
   };
 
@@ -359,6 +390,15 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
       XLSX.utils.book_append_sheet(wb, ws, "Grid Data");
       XLSX.writeFile(wb, `${program.name}_grid_data.xlsx`);
     }
+    // Track grid data export
+    if (typeof window !== "undefined" && window.pendo) {
+      window.pendo.track("grid_data_exported", {
+        programId,
+        fileFormat: format,
+        rowCount: gridRows.length,
+      });
+    }
+
     toast.success(`Exported spreadsheet grid data as ${format.toUpperCase()}`);
   };
 
@@ -388,6 +428,15 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
       XLSX.utils.book_append_sheet(wb, ws, "Registry");
       XLSX.writeFile(wb, `${program.name}_enrolled_registry.xlsx`);
     }
+    // Track registry data export
+    if (typeof window !== "undefined" && window.pendo) {
+      window.pendo.track("registry_data_exported", {
+        programId,
+        fileFormat: format,
+        applicantCount: program.applicants.length,
+      });
+    }
+
     toast.success(`Exported enrolled candidate registry as ${format.toUpperCase()}`);
   };
 
@@ -448,6 +497,16 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
       // Clear the grid and pre-seed clean rows
       const cleanRows = Array.from({ length: 5 }, () => makeEmptyRow(program.criteria));
       setGridRows(cleanRows);
+
+      // Track applicants synced to database
+      if (typeof window !== "undefined" && window.pendo) {
+        window.pendo.track("applicants_synced_to_database", {
+          programId,
+          totalRows: payload.length,
+          createdCount: resJson.data.created,
+          updatedCount: resJson.data.updated,
+        });
+      }
 
       toast.success("Synchronized scores successfully!");
       fetchProgramData();
@@ -517,6 +576,15 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
       });
 
       if (!res.ok) throw new Error("Deletion failed");
+
+      // Track applicant deletion
+      if (typeof window !== "undefined" && window.pendo) {
+        window.pendo.track("applicant_deleted", {
+          programId,
+          applicantId: appId,
+        });
+      }
+
       toast.success("Applicant deleted.");
       fetchProgramData();
     } catch (err: any) {
