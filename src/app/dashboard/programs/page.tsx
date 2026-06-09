@@ -79,7 +79,7 @@ export default async function ProgramsListPage() {
 
             const statusColors = {
               DRAFT: "bg-slate-100 text-slate-600 border-slate-200",
-              ACTIVE: "bg-blue-50 text-blue-700 border-blue-200",
+              ACTIVE: "bg-brand-light text-brand-primary border-brand-border/40",
               CLOSED: "bg-red-50 text-red-700 border-red-200",
             };
 

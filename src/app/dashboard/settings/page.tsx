@@ -43,7 +43,7 @@ export default async function SettingsPage() {
           {/* Workspace Settings */}
           <MotionItem className="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm relative overflow-hidden">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+              <div className="w-10 h-10 rounded-xl bg-brand-light text-brand-primary flex items-center justify-center border border-brand-border/40">
                 <Building2 className="w-5 h-5" />
               </div>
               <div>
@@ -86,7 +86,7 @@ export default async function SettingsPage() {
           {/* Personal Profile */}
           <MotionItem className="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm relative overflow-hidden">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
+              <div className="w-10 h-10 rounded-xl bg-brand-light text-brand-primary flex items-center justify-center border border-brand-border/40">
                 <UserCircle className="w-5 h-5" />
               </div>
               <div>

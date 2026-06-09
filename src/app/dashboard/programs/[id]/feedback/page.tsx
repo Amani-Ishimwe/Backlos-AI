@@ -272,7 +272,7 @@ export default function AIFeedbackRoom({ params }: PageProps) {
             onClick={handleStartGeneration}
             variant="primary"
             disabled={status.total === 0}
-            className="bg-gradient-to-r from-brand-primary to-indigo-600 border-0"
+            className="bg-brand-primary hover:bg-[#5A51E6] active:bg-[#493FCF] border-0 text-white"
           >
             Start Feedback Engine Queue
           </Button>
@@ -493,7 +493,7 @@ export default function AIFeedbackRoom({ params }: PageProps) {
               <Button
                 onClick={handleApproveAndSendAll}
                 variant="primary"
-                className="px-12 py-3 text-sm tracking-wide font-bold bg-gradient-to-r from-brand-primary to-indigo-600 border-0 text-white"
+                className="px-12 py-3 text-sm tracking-wide font-bold bg-brand-primary hover:bg-[#5A51E6] active:bg-[#493FCF] border-0 text-white"
               >
                 Approve & Send Feedback Reports to All Candidates
               </Button>
@@ -519,13 +519,13 @@ export default function AIFeedbackRoom({ params }: PageProps) {
               {/* Steps indicators */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs font-bold">
                 <div className={`p-2.5 rounded-btn border ${
-                  sendProgress.status === "preparing" ? "bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse" :
+                  sendProgress.status === "preparing" ? "bg-brand-light text-brand-primary border-brand-border/40 animate-pulse" :
                   "bg-emerald-50 text-emerald-700 border-emerald-200"
                 }`}>
                   1. Compile Templates
                 </div>
                 <div className={`p-2.5 rounded-btn border ${
-                  sendProgress.status === "sending" ? "bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse" :
+                  sendProgress.status === "sending" ? "bg-brand-light text-brand-primary border-brand-border/40 animate-pulse" :
                   sendProgress.status === "success" ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
                   "bg-slate-100 text-slate-400 border-transparent"
                 }`}>

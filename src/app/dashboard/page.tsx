@@ -115,7 +115,7 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <MotionItem className="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
           <div className="flex justify-between items-start mb-6">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100">
+            <div className="w-10 h-10 rounded-xl bg-brand-light text-brand-primary flex items-center justify-center border border-brand-border/40">
               <FolderKanban className="w-5 h-5" />
             </div>
           </div>
@@ -144,7 +144,7 @@ export default async function DashboardPage() {
 
         <MotionItem className="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm flex flex-col relative overflow-hidden group hover:shadow-md transition-shadow">
           <div className="flex justify-between items-start mb-6">
-            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
+            <div className="w-10 h-10 rounded-xl bg-brand-light text-brand-primary flex items-center justify-center border border-brand-border/40">
               <Send className="w-5 h-5" />
             </div>
           </div>
@@ -154,7 +154,7 @@ export default async function DashboardPage() {
           </div>
           {/* Progress Bar under stat */}
           <div className="mt-4 w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-purple-500 rounded-full" style={{ width: `${sentPercent}%` }} />
+            <div className="h-full bg-brand-primary rounded-full" style={{ width: `${sentPercent}%` }} />
           </div>
         </MotionItem>
 
@@ -268,7 +268,7 @@ export default async function DashboardPage() {
                                 Completed
                               </span>
                             ) : (
-                              <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-100">
+                              <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-brand-light text-brand-primary border border-brand-border/40">
                                 <Clock className="w-3 h-3 mr-1" />
                                 In Progress
                               </span>

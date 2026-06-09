@@ -626,7 +626,7 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
                 }}
                 onClick={() => fileInputRef.current?.click()}
                 className={`border-2 border-dashed rounded-btn p-6 text-center cursor-pointer transition-all duration-200 select-none h-full flex flex-col justify-center items-center
-                  ${isDragOver ? "bg-indigo-50/50 border-brand-primary" : "border-brand-border hover:bg-slate-50/50"}`}
+                  ${isDragOver ? "bg-brand-light/50 border-brand-primary" : "border-brand-border hover:bg-slate-50/50"}`}
               >
                 <input
                   type="file"
@@ -675,7 +675,7 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
                     <span className="bg-slate-200 text-slate-800 text-[10px] font-mono font-bold px-2 py-0.5 rounded-badge border border-slate-300">Email</span>
                     <span className="bg-slate-200 text-slate-800 text-[10px] font-mono font-bold px-2 py-0.5 rounded-badge border border-slate-300">Status</span>
                     {program.criteria.map((c) => (
-                      <span key={c.id} className="bg-indigo-50 text-indigo-700 text-[10px] font-mono font-bold px-2 py-0.5 rounded-badge border border-indigo-200">
+                      <span key={c.id} className="bg-brand-light text-brand-primary text-[10px] font-mono font-bold px-2 py-0.5 rounded-badge border border-brand-border/40">
                         {c.name}
                       </span>
                     ))}
@@ -713,7 +713,7 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
                         value={row.name}
                         onChange={(e) => handleCellChange(row.id, "name", e.target.value)}
                         disabled={isSyncing}
-                        className={`w-full px-2 py-1 bg-transparent border-0 border-b border-transparent focus:border-indigo-500 focus:ring-0 focus:outline-none transition-colors text-xs font-semibold ${
+                        className={`w-full px-2 py-1 bg-transparent border-0 border-b border-transparent focus:border-brand-primary focus:ring-0 focus:outline-none transition-colors text-xs font-semibold ${
                           isNameInvalid(row.name) ? "border-red-500 text-red-900 bg-red-50/20 rounded-btn" : ""
                         }`}
                       />
@@ -725,7 +725,7 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
                         value={row.email}
                         onChange={(e) => handleCellChange(row.id, "email", e.target.value)}
                         disabled={isSyncing}
-                        className={`w-full px-2 py-1 bg-transparent border-0 border-b border-transparent focus:border-indigo-500 focus:ring-0 focus:outline-none transition-colors text-xs font-medium ${
+                        className={`w-full px-2 py-1 bg-transparent border-0 border-b border-transparent focus:border-brand-primary focus:ring-0 focus:outline-none transition-colors text-xs font-medium ${
                           isEmailInvalid(row.email) ? "border-red-500 text-red-900 bg-red-50/20 rounded-btn" : ""
                         }`}
                       />
@@ -735,7 +735,7 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
                         value={row.status}
                         onChange={(e) => handleCellChange(row.id, "status", e.target.value)}
                         disabled={isSyncing}
-                        className="w-full px-2 py-1 bg-transparent border-0 border-b border-transparent focus:border-indigo-500 focus:ring-0 focus:outline-none transition-colors text-xs font-semibold text-slate-700 rounded-btn"
+                        className="w-full px-2 py-1 bg-transparent border-0 border-b border-transparent focus:border-brand-primary focus:ring-0 focus:outline-none transition-colors text-xs font-semibold text-slate-700 rounded-btn"
                       >
                         <option value="PENDING">PENDING</option>
                         <option value="ACCEPTED">ACCEPTED</option>
@@ -755,7 +755,7 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
                             value={score}
                             onChange={(e) => handleScoreChange(row.id, crit.id, e.target.value)}
                             disabled={isSyncing}
-                            className={`w-full px-2 py-1 bg-transparent border-0 border-b border-transparent text-right font-mono focus:border-indigo-500 focus:ring-0 focus:outline-none transition-colors text-xs font-semibold ${
+                            className={`w-full px-2 py-1 bg-transparent border-0 border-b border-transparent text-right font-mono focus:border-brand-primary focus:ring-0 focus:outline-none transition-colors text-xs font-semibold ${
                               isErr ? "border-red-500 text-red-900 bg-red-50/20 rounded-btn" : ""
                             }`}
                           />
@@ -769,7 +769,7 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
                         value={row.judgeNotes}
                         onChange={(e) => handleCellChange(row.id, "judgeNotes", e.target.value)}
                         disabled={isSyncing}
-                        className="w-full px-2 py-1 bg-transparent border-0 border-b border-transparent focus:border-indigo-500 focus:ring-0 focus:outline-none transition-colors text-xs text-slate-600 font-medium"
+                        className="w-full px-2 py-1 bg-transparent border-0 border-b border-transparent focus:border-brand-primary focus:ring-0 focus:outline-none transition-colors text-xs text-slate-600 font-medium"
                       />
                     </td>
                     <td className="px-2 py-2 text-center">
@@ -810,7 +810,7 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
                 variant="primary"
                 onClick={handleSyncToDatabase}
                 disabled={isSyncing || gridRows.length === 0 || gridErrCount > 0}
-                className="bg-gradient-to-r from-brand-primary to-indigo-600 border-0 text-white font-bold tracking-wide"
+                className="bg-brand-primary hover:bg-[#5A51E6] active:bg-[#493FCF] border-0 text-white font-bold tracking-wide"
               >
                 Sync & Save Candidates to Registry
               </Button>
@@ -838,12 +838,12 @@ export default function ApplicantsIntakePage({ params }: PageProps) {
               {/* Progress Steps UI */}
               <div className="grid grid-cols-3 gap-3 text-center text-xs font-bold">
                 <div className={`p-2.5 rounded-btn border ${
-                  syncStatus.status === "validating" ? "bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse" : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                  syncStatus.status === "validating" ? "bg-brand-light text-brand-primary border-brand-border/40 animate-pulse" : "bg-emerald-50 text-emerald-700 border-emerald-200"
                 }`}>
                   1. Local Validation
                 </div>
                 <div className={`p-2.5 rounded-btn border ${
-                  syncStatus.status === "uploading" ? "bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse" :
+                  syncStatus.status === "uploading" ? "bg-brand-light text-brand-primary border-brand-border/40 animate-pulse" :
                   syncStatus.status === "success" ? "bg-emerald-50 text-emerald-700 border-emerald-200" :
                   "bg-slate-100 text-slate-400 border-transparent"
                 }`}>

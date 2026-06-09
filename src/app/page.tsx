@@ -23,6 +23,7 @@ const staggerContainer = {
 export default function RedesignedLandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"organizers" | "subscriptions" | "developers">("organizers");
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -144,53 +145,156 @@ export default function RedesignedLandingPage() {
     },
   ];
 
-  const plans = [
-    {
-      name: "Starter Plan",
-      price: "$49",
-      desc: "Ideal for single hackathons and standard grant registries looking to automate closure.",
-      features: [
-        "Up to 200 applicants / month",
-        "Core AI-powered reviews",
-        "CSV Ingestion & column mapping",
-        "Resend email dispatch relay",
-        "Basic customer support via email",
-        "No long-term commitments",
+  const pricingTabs = {
+    organizers: {
+      subtitle: "Perfect for hackathons, seasonal grants, and one-off application events.",
+      cards: [
+        {
+          name: "Micro Event",
+          price: "$49",
+          period: "event",
+          desc: "Perfect for local cohorts, smaller grant applications, and test runs.",
+          features: [
+            "Up to 100 applicants",
+            "Standard Applicant Dashboard",
+            "Email Delivery",
+            "Ghost-Fighting Workflows",
+          ],
+          cta: "Purchase Pass",
+          popular: false,
+        },
+        {
+          name: "Standard Event",
+          price: "$149",
+          period: "event",
+          desc: "Most popular choice for medium-sized hackathons and standard programs.",
+          features: [
+            "Up to 500 applicants",
+            "Standard Applicant Dashboard",
+            "Email Delivery",
+            "Ghost-Fighting Workflows",
+            "Analytics post-event",
+          ],
+          cta: "Purchase Pass",
+          popular: true,
+        },
+        {
+          name: "Mega Hackathon",
+          price: "$299",
+          period: "event",
+          desc: "For large hackathons and national cohorts with high throughput.",
+          features: [
+            "Up to 1,500 applicants",
+            "Standard Applicant Dashboard",
+            "Email Delivery",
+            "Ghost-Fighting Workflows",
+            "$0.20 per overage",
+            "Premium Support",
+          ],
+          cta: "Purchase Pass",
+          popular: false,
+        },
       ],
-      cta: "Get Started",
-      popular: false,
     },
-    {
-      name: "Growth Plan",
-      price: "$199",
-      desc: "Designed for high-velocity accelerators, fellowships, and growing programs.",
-      features: [
-        "Up to 2,000 applicants / month",
-        "Premium AI feedback reviews",
-        "Priority parallel queue compiler",
-        "White-labeled applicant portal",
-        "Daily anti-ghosting alarms",
-        "Priority support via chat & email",
+    subscriptions: {
+      subtitle: "Continuous feedback infrastructure for hiring teams and university admissions.",
+      cards: [
+        {
+          name: "Starter",
+          price: "$79",
+          period: "mo",
+          desc: "Great for early stage projects and continuous small recruitment cycles.",
+          features: [
+            "Up to 250 reports/mo",
+            "Standard Integrations (ATS, Webhooks)",
+            "Branded Dashboard",
+            "Standard Support",
+          ],
+          cta: "Start Building",
+          popular: false,
+        },
+        {
+          name: "Growth",
+          price: "$249",
+          period: "mo",
+          desc: "Perfect for growing hiring teams needing custom domains and rubrics.",
+          features: [
+            "Up to 1,000 reports/mo",
+            "Standard Integrations (ATS, Webhooks)",
+            "Branded Dashboard",
+            "Advanced Rubric Intelligence",
+            "Connected Domain (Resend)",
+            "Priority Support",
+          ],
+          cta: "Start Building",
+          popular: true,
+        },
+        {
+          name: "Scale",
+          price: "$699",
+          period: "mo",
+          desc: "For enterprise scale cohorts requiring real-time logs and account managers.",
+          features: [
+            "Up to 5,000 reports/mo",
+            "Standard Integrations (ATS, Webhooks)",
+            "Branded Dashboard",
+            "Real-time Analytics Dashboard",
+            "Dedicated Account Manager",
+            "SLA Guarantees",
+          ],
+          cta: "Start Building",
+          popular: false,
+        },
       ],
-      cta: "Get Started",
-      popular: true,
     },
-    {
-      name: "Scale Plan",
-      price: "$599",
-      desc: "Perfect for large enterprise organizations seeking dedicated clusters and custom models.",
-      features: [
-        "Up to 10,000 applicants / month",
-        "Deep-personalized custom rubrics",
-        "SLA guaranteed deliveries",
-        "Dedicated database clusters",
-        "24/7 priority hotline assistance",
-        "Customized analytics dashboards",
+    developers: {
+      subtitle: "Headless feedback generation embedded directly into your own platform.",
+      cards: [
+        {
+          name: "Sandbox",
+          price: "Free",
+          period: null,
+          desc: "Test your API integration and customize JSON schema models for free.",
+          features: [
+            "Unlimited test environments",
+            "Direct API Access",
+            "Basic Rate Limits",
+            "Community Support",
+          ],
+          cta: "Start Building",
+          popular: false,
+        },
+        {
+          name: "Production",
+          price: "$0.15",
+          period: "report",
+          desc: "Pay strictly as you scale feedback dispatches, with custom JSON schemas.",
+          features: [
+            "Pay only for successful generations",
+            "Custom Schemas",
+            "Bring Your Own Delivery",
+            "Direct Webhooks Integration",
+          ],
+          cta: "Start Building",
+          popular: true,
+        },
+        {
+          name: "High Volume",
+          price: "$0.08",
+          period: "report",
+          desc: "Lower rate bracket automatically applied for high throughput platforms.",
+          features: [
+            "Automatically applied at >10k requests/mo",
+            "Custom Schemas",
+            "Bring Your Own Delivery",
+            "SLA Guarantees",
+          ],
+          cta: "Start Building",
+          popular: false,
+        },
       ],
-      cta: "Get Started",
-      popular: false,
     },
-  ];
+  };
 
   const faqs = [
     {
@@ -735,88 +839,126 @@ export default function RedesignedLandingPage() {
       </section>
 
       {/* Section 7: Pricing */}
-      <section id="pricing" className="py-24 px-6 max-w-6xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
-          <span className="bg-brand-light text-brand-primary text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
+      <section id="pricing" className="py-24 px-6 max-w-6xl mx-auto flex flex-col items-center">
+        <div className="text-center mb-10 space-y-4">
+          <span className="bg-brand-light text-brand-primary text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-brand-border/30">
             PRICING
           </span>
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-brand-text">
             Choose the Perfect Plan
           </h2>
-          <p className="text-lg text-brand-muted max-w-2xl mx-auto font-medium">
-            We offer flexible pricing plans that align with where your business stands today and where it's headed.
+          <p className="text-sm md:text-base text-brand-muted max-w-2xl mx-auto font-medium leading-relaxed">
+            {pricingTabs[activeTab].subtitle}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-16">
-          {plans.map((p) => (
-            <div
-              key={p.name}
-              className={`relative rounded-card p-8 md:p-10 flex flex-col bg-white transition-all duration-300
-                ${p.popular 
-                  ? "border-2 border-brand-primary shadow-[0_20px_40px_rgba(108,99,255,0.08)] md:-translate-y-4 z-10" 
-                  : "border border-brand-border/30 shadow-premium hover:shadow-lg"
+        {/* Dynamic Tab Switcher */}
+        <div className="inline-flex bg-brand-light/40 p-1 rounded-full border border-brand-border/30 shadow-sm mb-16 select-none pointer-events-auto">
+          {(Object.keys(pricingTabs) as Array<keyof typeof pricingTabs>).map((tabKey) => {
+            const labels = {
+              organizers: "Event Organizers",
+              subscriptions: "SaaS Subscriptions",
+              developers: "API Developers",
+            };
+            const isActive = activeTab === tabKey;
+            return (
+              <button
+                key={tabKey}
+                onClick={() => setActiveTab(tabKey)}
+                className={`px-5 py-2.5 rounded-full text-xs md:text-sm font-bold transition-all duration-200 ${
+                  isActive
+                    ? "bg-brand-primary text-white shadow-sm"
+                    : "text-brand-muted hover:text-brand-text"
                 }`}
-            >
-              {p.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-primary text-white text-[10px] font-bold uppercase tracking-wider px-4 py-1 rounded-full shadow-sm">
-                  MOST POPULAR
+              >
+                {labels[tabKey]}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Pricing Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch w-full mb-16">
+          {pricingTabs[activeTab].cards.map((card) => {
+            return (
+              <div
+                key={card.name}
+                className={`relative rounded-[2rem] p-8 md:p-10 flex flex-col bg-white/70 backdrop-blur-md transition-all duration-300
+                  ${card.popular
+                    ? "border-2 border-brand-primary shadow-[0_20px_40px_rgba(108,99,255,0.06)] md:-translate-y-4 scale-[1.02] z-10"
+                    : "border border-brand-border/40 shadow-premium hover:shadow-lg"
+                  }`}
+              >
+                {card.popular && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-primary text-white text-[10px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-full shadow-sm select-none">
+                    MOST POPULAR
+                  </div>
+                )}
+
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold text-brand-text mb-2">{card.name}</h3>
+                  <p className="text-xs text-brand-muted font-medium h-12 leading-relaxed">{card.desc}</p>
                 </div>
-              )}
 
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-brand-text mb-2">{p.name}</h3>
-                <p className="text-xs text-brand-muted font-medium h-12 leading-relaxed">{p.desc}</p>
+                <div className="mb-8 flex items-baseline text-brand-text">
+                  <span className="text-5xl font-extrabold tracking-tight">{card.price}</span>
+                  {card.period && (
+                    <span className="text-sm text-brand-muted font-semibold ml-2">/{card.period}</span>
+                  )}
+                </div>
+
+                <Link href="/signup" className="w-full mb-8">
+                  <button
+                    className={`w-full py-3.5 rounded-full font-bold text-xs transition-all duration-200
+                      ${card.popular
+                        ? "bg-brand-primary text-white hover:bg-[#5A51E6] shadow-md hover:scale-[1.02] active:scale-95"
+                        : "bg-transparent text-brand-primary hover:bg-brand-light border-2 border-brand-primary/20 hover:border-brand-primary hover:scale-[1.02] active:scale-95"
+                      }`}
+                  >
+                    {card.cta}
+                  </button>
+                </Link>
+
+                <ul className="space-y-4 text-xs font-semibold text-brand-muted flex-grow">
+                  {card.features.map((f, i) => (
+                    <li key={i} className="flex items-center">
+                      <div className="w-4 h-4 rounded-full bg-brand-light flex items-center justify-center mr-3 shrink-0">
+                        <svg className="w-2.5 h-2.5 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-8 text-center text-[10px] font-semibold text-brand-muted/65">
+                  *No long-term commitment – cancel anytime*
+                </div>
               </div>
-
-              <div className="mb-8 flex items-baseline text-brand-text">
-                <span className="text-5xl font-extrabold tracking-tight">{p.price}</span>
-                <span className="text-sm text-brand-muted font-semibold ml-2">/month</span>
-              </div>
-
-              <Link href="/signup" className="w-full mb-8">
-                <button className={`w-full py-3.5 rounded-full font-bold text-xs transition-all duration-200
-                  ${p.popular 
-                    ? "bg-brand-primary text-white hover:bg-brand-primary/95 shadow-md hover:scale-[1.02]" 
-                    : "bg-slate-50 text-brand-text hover:bg-brand-light hover:text-brand-primary border border-brand-border/30"
-                  }`}>
-                  {p.cta}
-                </button>
-              </Link>
-
-              <ul className="space-y-4 text-xs font-semibold text-brand-muted flex-grow">
-                {p.features.map((f, i) => (
-                  <li key={i} className="flex items-center">
-                    <div className="w-4 h-4 rounded-full bg-brand-light flex items-center justify-center mr-3 shrink-0">
-                      <svg className="w-2.5 h-2.5 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              
-              <div className="mt-8 text-center text-[10px] font-semibold text-brand-muted">
-                *No commitment – cancel anytime*
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Pricing conversion banner */}
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 p-8 bg-brand-light/30 border border-brand-border/20 rounded-card shadow-sm">
+        <div className="w-full max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 p-8 bg-brand-light/30 border border-brand-border/30 rounded-card shadow-sm">
           <div className="flex flex-wrap gap-6 text-xs font-bold text-brand-text justify-center md:justify-start">
             <span className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+              <svg className="w-4 h-4 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
               100% Safe Purchase
             </span>
             <span className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+              <svg className="w-4 h-4 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
               7-Day Money Back Guarantee
             </span>
             <span className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+              <svg className="w-4 h-4 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
               Instant Setup
             </span>
           </div>
@@ -824,7 +966,9 @@ export default function RedesignedLandingPage() {
             <div className="text-xs font-bold text-brand-text">Not sure if we're a fit?</div>
             <p className="text-[11px] text-brand-muted font-medium">Setup a 15-minute call with our developers.</p>
             <Link href="/contact" className="inline-block mt-2">
-              <button className="bg-brand-text text-white text-[11px] font-bold px-4 py-2 rounded-full hover:bg-slate-800 transition-all">Schedule A Call</button>
+              <button className="bg-brand-primary text-white text-[11px] font-bold px-4 py-2 rounded-full hover:bg-brand-primary/90 transition-all shadow-sm">
+                Schedule A Call
+              </button>
             </Link>
           </div>
         </div>
