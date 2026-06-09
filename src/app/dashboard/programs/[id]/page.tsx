@@ -123,7 +123,7 @@ export default async function ProgramOverviewPage({ params }: ProgramOverviewPro
       </div>
 
       {/* Overview stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="p-4 flex flex-col justify-center">
           <CardDescription className="text-[10px] font-bold uppercase tracking-wider mb-1">
             Total Candidates

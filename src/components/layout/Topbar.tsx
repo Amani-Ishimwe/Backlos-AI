@@ -2,16 +2,18 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import { Bell, LogOut, Search } from "lucide-react";
+import { Bell, LogOut, Search, Menu, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface TopbarProps {
   userInitials: string;
   userEmail: string;
+  onMenuClick?: () => void;
 }
 
-const Topbar: React.FC<TopbarProps> = ({ userInitials, userEmail }) => {
+const Topbar: React.FC<TopbarProps> = ({ userInitials, userEmail, onMenuClick }) => {
   const router = useRouter();
   const supabase = createClient();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -23,9 +25,27 @@ const Topbar: React.FC<TopbarProps> = ({ userInitials, userEmail }) => {
   };
 
   return (
-    <header className="h-[72px] bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-8 flex items-center justify-between shrink-0 select-none sticky top-0 z-40">
-      {/* Search / Breadcrumb */}
-      <div className="flex items-center flex-1">
+    <header className="h-[72px] bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-4 md:px-8 flex items-center justify-between shrink-0 select-none sticky top-0 z-40">
+      {/* Search / Breadcrumb / Mobile menu */}
+      <div className="flex items-center flex-1 space-x-3">
+        <button
+          onClick={onMenuClick}
+          className="p-2 -ml-2 rounded-xl text-slate-500 hover:text-brand-primary hover:bg-slate-100 transition-colors md:hidden focus:outline-none"
+          aria-label="Open sidebar"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+
+        {/* Mobile Brand Logo */}
+        <Link href="/dashboard" className="flex items-center space-x-2 md:hidden">
+          <div className="flex items-center justify-center w-7 h-7 bg-brand-primary text-white font-bold rounded-lg shadow-sm">
+            <Sparkles className="w-3.5 h-3.5" />
+          </div>
+          <span className="text-base font-bold tracking-tight text-slate-900">
+            Backlos
+          </span>
+        </Link>
+
         <div className="relative w-full max-w-md hidden md:block">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search className="h-4 w-4 text-slate-400" />

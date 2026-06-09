@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable}`}>
-      <body className="font-sans antialiased text-brand-text bg-white">
+    <html lang="en" className={`${spaceGrotesk.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased text-brand-text bg-white" suppressHydrationWarning>
         {children}
         <ToastProvider />
       </body>

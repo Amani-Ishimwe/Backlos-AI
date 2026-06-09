@@ -517,7 +517,7 @@ export default function AIFeedbackRoom({ params }: PageProps) {
               </div>
 
               {/* Steps indicators */}
-              <div className="grid grid-cols-3 gap-3 text-center text-xs font-bold">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-xs font-bold">
                 <div className={`p-2.5 rounded-btn border ${
                   sendProgress.status === "preparing" ? "bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse" :
                   "bg-emerald-50 text-emerald-700 border-emerald-200"

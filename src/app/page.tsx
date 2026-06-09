@@ -22,6 +22,7 @@ const staggerContainer = {
 
 export default function RedesignedLandingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -244,7 +245,7 @@ export default function RedesignedLandingPage() {
       <div className="absolute top-[1200px] right-0 w-[500px] h-[500px] bg-[#938EFF]/5 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* Navbar */}
-      <div className="fixed top-0 w-full z-50 flex justify-center mt-4 px-4 pointer-events-none">
+      <div className="fixed top-0 w-full z-50 flex flex-col items-center mt-4 px-4 pointer-events-none">
         <header className="pointer-events-auto bg-white/80 backdrop-blur-xl border border-brand-border/40 rounded-full h-14 px-6 flex items-center justify-between w-full max-w-5xl shadow-[0_4px_30px_rgba(108,99,255,0.03)]">
           <div className="flex items-center space-x-2">
             <span className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white rounded-full shadow-sm">
@@ -274,13 +275,94 @@ export default function RedesignedLandingPage() {
                 Log in
               </button>
             </Link>
-            <Link href="/signup">
+            <Link href="/signup" className="hidden sm:block">
               <button className="bg-brand-text hover:bg-slate-800 text-white font-semibold text-[13px] px-5 py-2 rounded-full shadow-sm transition-all duration-200 hover:scale-105 active:scale-95">
                 Get Started
               </button>
             </Link>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-full hover:bg-brand-light text-brand-muted hover:text-brand-primary md:hidden transition-colors flex items-center justify-center pointer-events-auto"
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? (
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
         </header>
+ 
+        {/* Mobile Menu Dropdown Panel */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="pointer-events-auto mt-2 w-full max-w-5xl bg-white/95 backdrop-blur-xl border border-brand-border/40 rounded-[2rem] p-6 shadow-[0_10px_40px_rgba(108,99,255,0.08)] md:hidden flex flex-col space-y-4"
+            >
+              <nav className="flex flex-col space-y-2 font-semibold text-[14px] text-brand-muted">
+                <a
+                  href="#features"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2.5 hover:bg-brand-light hover:text-brand-primary rounded-xl transition-all"
+                >
+                  Product
+                </a>
+                <a
+                  href="#benefits"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2.5 hover:bg-brand-light hover:text-brand-primary rounded-xl transition-all"
+                >
+                  Benefits
+                </a>
+                <a
+                  href="#reviews"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2.5 hover:bg-brand-light hover:text-brand-primary rounded-xl transition-all"
+                >
+                  Reviews
+                </a>
+                <a
+                  href="#pricing"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2.5 hover:bg-brand-light hover:text-brand-primary rounded-xl transition-all"
+                >
+                  Pricing
+                </a>
+                <a
+                  href="#faq"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2.5 hover:bg-brand-light hover:text-brand-primary rounded-xl transition-all"
+                >
+                  FAQ
+                </a>
+              </nav>
+ 
+              <div className="h-px bg-slate-100 w-full" />
+ 
+              <div className="flex flex-col space-y-2">
+                <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                  <button className="w-full bg-slate-50 hover:bg-slate-100 text-brand-text font-bold text-sm py-2.5 rounded-xl border border-slate-200 transition-colors">
+                    Log in
+                  </button>
+                </Link>
+                <Link href="/signup" onClick={() => setMobileMenuOpen(false)}>
+                  <button className="w-full bg-brand-primary hover:bg-brand-primary/90 text-white font-bold text-sm py-2.5 rounded-xl shadow-[0_4px_12px_rgba(108,99,255,0.2)] text-center transition-colors">
+                    Get Started
+                  </button>
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Hero Section */}
@@ -844,10 +926,10 @@ export default function RedesignedLandingPage() {
           
           <div className="relative z-10 space-y-8 max-w-2xl mx-auto flex flex-col items-center">
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight">
-              Start Saving More and Streamlining Your Business Today.
+              Start Automating Feedback and Streamlining Your Cohorts Today.
             </h2>
             <p className="text-sm md:text-base text-slate-300 font-medium max-w-lg">
-              Experience the power of automated savings and optimized feedback spending. Get started now to boost efficiency and maximize cohort returns.
+              Experience the power of automated reviews and optimized candidate communication. Get started now to boost efficiency and maximize cohort reputation index.
             </p>
             <div className="pt-4 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <Link href="/signup" className="w-full sm:w-auto">

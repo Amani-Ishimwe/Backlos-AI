@@ -4,13 +4,15 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Badge from "@/components/ui/Badge";
-import { LayoutDashboard, FolderKanban, CreditCard, Sparkles, Settings } from "lucide-react";
+import { LayoutDashboard, FolderKanban, CreditCard, Sparkles, Settings, X } from "lucide-react";
 
 interface SidebarProps {
   orgName: string;
   orgSlug: string;
   plan: string;
   userInitials: string;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -18,6 +20,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   orgSlug,
   plan,
   userInitials,
+  isOpen = false,
+  onClose,
 }) => {
   const pathname = usePathname();
 
@@ -55,10 +59,14 @@ const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside className="w-[260px] h-screen bg-slate-50 border-r border-slate-200 flex flex-col shrink-0 select-none text-slate-900">
+    <aside
+      className={`w-[260px] h-screen bg-slate-50 border-r border-slate-200 flex flex-col shrink-0 select-none text-slate-900 fixed inset-y-0 left-0 z-50 md:relative md:translate-x-0 transition-transform duration-300 ease-in-out ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
       {/* Brand Header */}
-      <div className="h-[72px] px-6 flex items-center border-b border-slate-200 shrink-0">
-        <Link href="/dashboard" className="flex items-center space-x-3 group">
+      <div className="h-[72px] px-6 flex items-center justify-between border-b border-slate-200 shrink-0">
+        <Link href="/dashboard" className="flex items-center space-x-3 group" onClick={onClose}>
           <div className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white font-bold rounded-xl shadow-[0_4px_10px_rgba(108,99,255,0.3)] group-hover:scale-105 transition-transform">
             <Sparkles className="w-4 h-4" />
           </div>
@@ -66,6 +74,13 @@ const Sidebar: React.FC<SidebarProps> = ({
             Backlos
           </span>
         </Link>
+        <button
+          onClick={onClose}
+          className="p-1 rounded-lg hover:bg-slate-200 text-slate-500 md:hidden transition-colors"
+          aria-label="Close sidebar"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Nav Menu Content */}
@@ -85,6 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <Link
                   key={item.label}
                   href={item.href}
+                  onClick={onClose}
                   className={`flex items-center px-3 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
                     isActive
                       ? "bg-brand-primary/10 text-brand-primary shadow-sm"
@@ -123,6 +139,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <Link
               href={`/org/${orgSlug}`}
               target="_blank"
+              onClick={onClose}
               className="text-[10px] font-bold text-brand-primary hover:text-brand-primary/80 transition-colors uppercase tracking-wider"
             >
               Public Profile ↗

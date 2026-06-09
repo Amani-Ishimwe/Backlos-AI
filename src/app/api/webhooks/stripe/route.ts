@@ -18,7 +18,8 @@ function getPlanFromPriceId(priceId: string): Plan {
 
 export async function POST(request: Request) {
   const body = await request.text();
-  const sig = headers().get("Stripe-Signature");
+  const headerList = await headers();
+  const sig = headerList.get("Stripe-Signature");
 
   let event;
 
