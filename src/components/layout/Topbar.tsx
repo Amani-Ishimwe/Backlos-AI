@@ -38,9 +38,7 @@ const Topbar: React.FC<TopbarProps> = ({ userInitials, userEmail, onMenuClick })
 
         {/* Mobile Brand Logo */}
         <Link href="/dashboard" className="flex items-center space-x-2 md:hidden">
-          <div className="flex items-center justify-center w-7 h-7 bg-brand-primary text-white font-bold rounded-lg shadow-sm">
-            <Sparkles className="w-3.5 h-3.5" />
-          </div>
+          <img src="/logo.png" alt="Backlos Logo" className="w-7 h-7 object-contain" />
           <span className="text-base font-bold tracking-tight text-slate-900">
             Backlos
           </span>

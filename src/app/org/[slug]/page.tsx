@@ -85,9 +85,7 @@ export default async function PublicOrgProfilePage({ params }: PublicOrgProps) {
         {/* Brand Attribution Header */}
         <header className="flex items-center justify-between border-b border-brand-light pb-6 select-none bg-white p-6 rounded-card border border-brand-border shadow-sm">
           <div className="flex items-center space-x-2">
-            <span className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white font-bold rounded-full text-base">
-              ↺
-            </span>
+            <img src="/logo.png" alt="Backlos Logo" className="w-8 h-8 object-contain" />
             <span className="text-xl font-bold tracking-tight text-brand-text">
               Backlos
             </span>

@@ -82,9 +82,7 @@ export default function SignupPage() {
         {/* Backlos Logo Header */}
         <div className="flex flex-col items-center mb-8">
           <div className="flex items-center space-x-2">
-            <span className="flex items-center justify-center w-10 h-10 bg-brand-primary text-white font-bold rounded-full text-xl shadow-md">
-              ↺
-            </span>
+            <img src="/logo.png" alt="Backlos Logo" className="w-10 h-10 object-contain" />
             <span className="text-3xl font-bold tracking-tight text-brand-text">
               Backlos
             </span>

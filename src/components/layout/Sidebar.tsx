@@ -67,9 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Brand Header */}
       <div className="h-[72px] px-6 flex items-center justify-between border-b border-slate-200 shrink-0">
         <Link href="/dashboard" className="flex items-center space-x-3 group" onClick={onClose}>
-          <div className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white font-bold rounded-xl shadow-[0_4px_10px_rgba(108,99,255,0.3)] group-hover:scale-105 transition-transform">
-            <Sparkles className="w-4 h-4" />
-          </div>
+          <img src="/logo.png" alt="Backlos Logo" className="w-8 h-8 object-contain group-hover:scale-105 transition-transform" />
           <span className="text-xl font-bold tracking-tight text-slate-900">
             Backlos
           </span>

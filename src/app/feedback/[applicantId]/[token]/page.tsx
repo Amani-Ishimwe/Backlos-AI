@@ -101,9 +101,7 @@ export default async function PublicReportPage({ params }: PublicReportProps) {
         {/* Brand Attribution Header */}
         <header className="flex items-center justify-between border-b border-brand-light pb-6 bg-white p-6 rounded-card shadow-sm border border-brand-border">
           <div className="flex items-center space-x-2">
-            <span className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white font-bold rounded-full text-base">
-              ↺
-            </span>
+            <img src="/logo.png" alt="Backlos Logo" className="w-8 h-8 object-contain" />
             <span className="text-xl font-bold tracking-tight text-brand-text">
               Backlos
             </span>

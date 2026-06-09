@@ -352,14 +352,7 @@ export default function RedesignedLandingPage() {
       <div className="fixed top-0 w-full z-50 flex flex-col items-center mt-4 px-4 pointer-events-none">
         <header className="pointer-events-auto bg-white/80 backdrop-blur-xl border border-brand-border/40 rounded-full h-14 px-6 flex items-center justify-between w-full max-w-5xl shadow-[0_4px_30px_rgba(108,99,255,0.03)]">
           <div className="flex items-center space-x-2">
-            <span className="flex items-center justify-center w-8 h-8 bg-brand-primary text-white rounded-full shadow-sm">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                <path d="M16 3h5v5" />
-                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                <path d="M8 21H3v-5" />
-              </svg>
-            </span>
+            <img src="/logo.png" alt="Backlos Logo" className="w-8 h-8 object-contain" />
             <span className="text-lg font-bold tracking-tight text-brand-text">
               Backlos
             </span>
@@ -1095,14 +1088,7 @@ export default function RedesignedLandingPage() {
       <footer className="py-12 px-6 border-t border-brand-border/20 text-center text-brand-muted text-xs font-semibold z-10 relative bg-white">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center space-x-2">
-             <span className="w-6 h-6 bg-brand-text text-white rounded-md flex items-center justify-center shadow-sm">
-               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                <path d="M16 3h5v5" />
-                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                <path d="M8 21H3v-5" />
-              </svg>
-             </span>
+             <img src="/logo.png" alt="Backlos Logo" className="w-6 h-6 object-contain" />
              <span className="font-bold text-brand-text text-sm">Backlos</span>
           </div>
           <div className="flex gap-6 text-[11px]">
